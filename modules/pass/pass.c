@@ -11,46 +11,12 @@
 #include <stdlib.h>
 #include "pass.h"
 
-int main(){
-    uint8_t **img_dist,**img_bin;
-    uint32_t nl=4,nc=4;
-    alloc_matrix(&img_dist,nl,nc);
-    alloc_matrix(&img_bin,nl,nc);
 
-    img_bin[0][0]=0;
-    img_bin[0][1]=1;
-    img_bin[0][2]=1;
-    img_bin[0][3]=1;
-    img_bin[1][0]=1;
-    img_bin[1][1]=1;
-    img_bin[1][2]=1;
-    img_bin[1][3]=1;
-    img_bin[2][0]=1;
-    img_bin[2][1]=1;
-    img_bin[2][2]=1;
-    img_bin[2][3]=0;
-    img_bin[3][0]=1;
-    img_bin[3][1]=1;
-    img_bin[3][2]=1;
-    img_bin[3][3]=1;
-
-    printf("Matrice img_bin : \n");
-    disp_matrix(&img_bin,nl,nc);
-    first_pass(&img_bin, &img_dist,nl,nc);
-
-    printf("Passe avant : \n");
-    disp_matrix(&img_dist,nl,nc);
-    last_pass(&img_bin, &img_dist,nl,nc);
-
-    printf("Passe arriere et matrice img_dist: \n");
-    disp_matrix(&img_dist,nl,nc);
-    return EXIT_SUCCESS;
-}
 void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc)
 {
 	int i ;
 	*pA = (uint8_t **)malloc(nl * sizeof(uint8_t *)) ;
-	for (i=0; i<nc; i++)
+	for (i=0; i<nl; i++)
 	{
 		(*pA)[i] = (uint8_t *)malloc(nc * sizeof(uint8_t)) ;
 	}
@@ -63,10 +29,11 @@ void disp_matrix(uint8_t ***pX, uint32_t nl, uint32_t nc)
 	{
 		for(j=0; j<nl;j++)
 		{
-			printf("%d  ",(*pX)[i][j]);
+			printf("%d ",(*pX)[i][j]);
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
 //
 // first_pass

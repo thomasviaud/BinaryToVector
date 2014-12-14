@@ -253,16 +253,6 @@ BmpWorker_RawData_display(const BmpWorker_infoHeader * infoHeader,
   }
 }
 
-
-void allocmatrix_bin (uint8_t ***pA, uint32_t nl, uint32_t nc){
-  int i;
-  *pA = (uint8_t**)malloc(nl*sizeof(uint8_t*));
-  for(i=0; i<nl ; i++){
-    (*pA)[i] = (uint8_t*)malloc(nc*sizeof(uint8_t));
-  }
-}
-
-
 void
 BmpWorker_img_bin (uint8_t **img_bin, const BmpWorker_infoHeader * infoHeader,
                           const uint8_t * pData)

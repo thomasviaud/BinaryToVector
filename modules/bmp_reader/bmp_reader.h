@@ -5,8 +5,8 @@
  *      Author: Thomas Bores
  */
 
-#ifndef BMP_WORKER_H_
-#define BMP_WORKER_H_
+#ifndef BMP_READER_H_
+#define BMP_READER_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -139,4 +139,11 @@ BmpWorker_saveOnDisk(char * fileName, const BmpWorker_fileHeader * fileHeader,
                      const BmpWorker_infoHeader * infoHeader,
                      const uint8_t * pData);
 
-#endif /* BMP_WORKER_H_ */
+// Generate the binary matrix
+void
+BmpWorker_img_bin(uint8_t **img_bin,
+                  const BmpWorker_infoHeader * infoHeader,
+                  const uint8_t * pData);
+
+
+#endif /* BMP_READER_H_ */
