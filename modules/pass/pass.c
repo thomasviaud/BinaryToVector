@@ -25,9 +25,9 @@ void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc)
 void disp_matrix(uint8_t ***pX, uint32_t nl, uint32_t nc)
 {
 	int i,j;
-	for (i=0;i<nc;i++)
+	for (i=0;i<nl;i++)
 	{
-		for(j=0; j<nl;j++)
+		for(j=0; j<nc;j++)
 		{
 			printf("%d ",(*pX)[i][j]);
 		}
