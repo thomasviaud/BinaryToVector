@@ -14,7 +14,7 @@ main(void)
 {
     puts("BmpReader started.\n");
 
-    FILE * fBMP = fopen("../img/test_20x20.bmp","rb+");
+    FILE * fBMP = fopen("./img/test_20x20.bmp","rb+");
 
     if (fBMP != NULL)
     {
