@@ -7,9 +7,8 @@ typedef struct{
     int posN;
     int posM;
 }t_pixel;
-void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc);
-void disp_matrix(uint8_t ***pX, uint32_t nl, uint32_t nc);
-char set_type(int l, int c, uint8_t ***dist);
-char set_border(int l, int c, uint8_t ***dist);
-char set_mult(int l, int c, uint8_t ***dist);
+char set_type(uint8_t ***dist, uint32_t l, uint32_t c);
+char set_border(uint8_t ***dist, uint32_t l, uint32_t c);
+char set_mult(uint8_t ***dist, uint32_t l, uint32_t c);
+void print_pixel(t_pixel pix);
 #endif
