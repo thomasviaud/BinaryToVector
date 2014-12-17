@@ -140,7 +140,7 @@ BmpWorker_saveOnDisk(char * fileName, const BmpWorker_fileHeader * fileHeader,
                      const uint8_t * pData);
 
 // Generate the binary matrix
-void
+int8_t
 BmpWorker_img_bin(uint8_t **img_bin,
                   const BmpWorker_infoHeader * infoHeader,
                   const uint8_t * pData);

@@ -17,7 +17,7 @@ main(void)
 {
 	puts("BmpReader started.\n");
 
-	FILE * fBMP = fopen("./img/test_50x20.bmp","rb+");
+	FILE * fBMP = fopen("./img/test_100x100.bmp","rb+");
 
 	if (fBMP != NULL)
 	{
@@ -61,7 +61,11 @@ main(void)
 					alloc_matrix(&img_bin,height,width);
 
 					// Remplissage matrice img_bin
-					BmpWorker_img_bin(img_bin, bmpHeader, pData);
+					if (BmpWorker_img_bin(img_bin, bmpHeader, pData) == 0) 
+                    {
+                        fprintf(stderr, "Votre image n'est pas binaire !\n");
+                        return ERROR_INVALID_DATA;
+                    }
 
 					// Affichage matrice img_bin
 					puts("===== MATRICE BINAIRE =====");

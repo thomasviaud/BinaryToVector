@@ -253,7 +253,7 @@ BmpWorker_RawData_display(const BmpWorker_infoHeader * infoHeader,
   }
 }
 
-void
+int8_t
 BmpWorker_img_bin (uint8_t **img_bin, const BmpWorker_infoHeader * infoHeader,
                           const uint8_t * pData)
 {
@@ -286,14 +286,13 @@ BmpWorker_img_bin (uint8_t **img_bin, const BmpWorker_infoHeader * infoHeader,
       if (blackCode == nBytesPerPixel) pixelValue = 1;
       else if (whiteCode == nBytesPerPixel) pixelValue = 0;
       else {
-        printf("Votre image n'est pas binaire !");
-        return;
+        return 0;
       }
 
-      img_bin[pixelCounter/infoHeader->img_width][pixelCounter%infoHeader->img_width] = pixelValue; // Transforme la liste de pixels en matrice N*M avec N=height et M=width
-
+      img_bin[pixelCounter/infoHeader->img_width][pixelCounter%infoHeader->img_width] = pixelValue;// Transforme la liste de pixels en matrice N*M avec N=height et M=width
     }
   }
+  return 1; 
 }
 
 
