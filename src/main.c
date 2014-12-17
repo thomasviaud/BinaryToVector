@@ -17,7 +17,7 @@ main(void)
 {
 	puts("BmpReader started.\n");
 
-	FILE * fBMP = fopen("./img/test_20x20.bmp","rb+");
+	FILE * fBMP = fopen("./img/test_50x20.bmp","rb+");
 
 	if (fBMP != NULL)
 	{
@@ -83,17 +83,12 @@ main(void)
 					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(&img_dist,height,width);
 
-					// Squelettisation
-					t_plist img_label=skelet(&img_dist, height, width);
-					puts("===== SQUELETTE =====");                    
-					print_list (img_label);
-
 				}
 				else
 				{
 					fprintf(stderr, "Can't read bitmap data\n");
 				}
-				//free(pData);
+				free(pData);
 		  }
 		  else
 		  {

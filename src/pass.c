@@ -100,7 +100,7 @@ void last_pass(uint8_t ***bin, uint8_t ***dist, uint32_t nl, uint32_t nc){
         }
     }
 
-    for(i=nl-1;i>0;i--){
+    for(i=nl-2;i>0;i--){
         for(j=nc-2;j>0;j--){
             if((*bin)[i][j]==1){
                     (*dist)[i][j]=(uint8_t)fmin((*dist)[i][j],fmin((*dist)[i][j+1]+1,(*dist)[i+1][j]+1));
