@@ -83,10 +83,12 @@ main(void)
 					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(&img_dist,height,width);
 
+					// Déclaration img_label
+					t_pixel **img_label_matrix;
+					alloc_label_matrix(&img_label_matrix,height,width);
 					// Squelettisation
-					t_plist img_label=skelet(&img_dist, height, width);
-					puts("===== SQUELETTE =====");                    
-					print_list (img_label);
+					puts("===== SQUELETTE ====="); 
+					skelet(&img_dist, &img_label_matrix,height,width);
 
 				}
 				else

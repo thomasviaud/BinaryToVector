@@ -121,22 +121,29 @@ char set_mult(uint8_t ***dist, uint32_t l, uint32_t c){
 // Prend en argument un pixel
 // et l'affiche dans la console
 //
-void print_pixel(t_pixel pix){
-	if(pix.type==1){
-		(void)printf("O");
-	}else{
-		(void)printf("F--");
-		return;
+void print_pixel(t_pixel pix, uint32_t l, uint32_t c){
+	int i,j;
+	for(i=0;i<l;i++){
+		for(j=0;j<c;j++){
+			if(img_label_matrix[i][j].fond==1){
+				(void)printf("F--");
+				return;
+			}else{
+				(void)printf("O");
+			}
+
+			if(img_label_matrix[i][j].obj.border==1){
+				(void)printf("C");
+			}else{
+				(void)printf("I");
+			}
+
+			if(img_label_matrix[i][j].obj.mult==0){
+				(void)printf("-");
+			}else{
+				(void)printf("M");
+			}
+		}
+		(void)printf("\n");
 	}
-	if(pix.border==1){
-		(void)printf("C");
-	}else{
-		(void)printf("I");
-	}
-	if(pix.mult==0){
-		(void)printf("-");
-	}else{
-		(void)printf("M");
-	}
-	(void)printf("[%d][%d] ",pix.posN,pix.posM);
 }

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////
-// skel.c                                                //
+// skel->c                                                //
 // Contient les fonctions relatives à la squelettisation //
 ///////////////////////////////////////////////////////////
 
@@ -16,74 +16,58 @@
 // Prend en argument la matrice de transformée en distance ainsi que sa taille
 // Renvoi le pointeur vers le premier élément de la liste img_label
 
-t_plist skelet(uint8_t ***img_dist, uint32_t nl, uint32_t nc){
+void skelet(uint8_t ***img_dist, t_pixel ***img_label_matrix, uint32_t nl, uint32_t nc){
 	uint32_t i,j;
-	t_plist img_label;
-	t_pixel pix;
-	img_label=create_void();
-	// Contour de la matrice img_dist
+	// Contour de la matrice img_label
 	for(i=0;i<nl;i++){
 		// Première colonne gauche
-		pix.posN=i;
-		pix.posM=0;		
-		pix.type=set_type(img_dist, i, 0);
-		pix.border=set_border(img_dist,i,0);		
-		if(pix.type==1 && img_dist[i][1]==0){
-			pix.mult=0;
+		if(img_dist[i][0]==0){
+			img_label_matrix[i][0]->fond=1;
+		}else{
+			img_label_matrix[i][0]->obj.border=set_border(img_dist,i,0);		
+			img_label_matrix[i][0]->obj.mult=set_mult(img_dist,i,0);
 		}
-		if(pix.type==1){
-			img_label=add_list(pix,img_label);
-		}		
+		// Première colonne droite
+		if(img_dist[i][nc-1]==0){
+			img_label_matrix[i][nc-1]->fond=1;
+		}else{		
+			img_label_matrix[i][nc-1]->obj.border=set_border(img_dist,i,nc-1);		
+			img_label_matrix[i][nc-1]->obj.mult=set_mult(img_dist,i,nc-1);
+		}
 
-		// Première colonne droite		
-		pix.posN=i;
-		pix.posM=nc-1;		
-		pix.type=set_type(img_dist, i, nc-1);
-		pix.border=set_border(img_dist,i,nc-1);		
-		if(pix.type==1 && img_dist[i][nc-2]==0){
-			pix.mult=0;
-		}
-		if(pix.type==1){
-			img_label=add_list(pix,img_label);
-		}	
-	}	
+	}
 	for(j=1;j<nc-1;j++){
 		// Première ligne haute
-		pix.posN=0;
-		pix.posM=j;		
-		pix.type=set_type(img_dist, 0, j);
-		pix.border=set_border(img_dist,0, j);		
-		if(pix.type==1 && img_dist[1][j]==0){
-			pix.mult=0;
+		if(img_dist[0][j]==0){
+			img_label_matrix[0][j]->fond=1;
+		}else{	
+			img_label_matrix[0][j]->obj.border=set_border(img_dist,0,j);		
+			img_label_matrix[0][j]->obj.mult=set_mult(img_dist,0,j);
 		}
-		if(pix.type==1){
-			img_label=add_list(pix,img_label);
-		}		
-
-		// Première ligne basse
-		pix.posN=nl-1;
-		pix.posM=j;		
-		pix.type=set_type(img_dist, nl-1, j);
-		pix.border=set_border(img_dist, nl-1, j);		
-		if(pix.type==1 && img_dist[1][j]==0){
-			pix.mult=0;
+		// Première ligne basse	
+		if(img_dist[nl-1][j]==0){
+			img_label_matrix[nl-1][j]->fond=1;
+		}else{
+			img_label_matrix[nl-1][j]->obj.border=set_border(img_dist,nl-1,j);		
+			img_label_matrix[nl-1][j]->obj.mult=set_mult(img_dist,nc-1,j);
 		}
-		if(pix.type==1){
-			img_label=add_list(pix,img_label);
-		}	
 	}
-	// Matrice privée des bords
+	// Partie interne de la matrice
 	for(i=1;i<nl-1;i++){
-		for(j=1;j<nc-1;j++){			
-			pix.posN=i;
-			pix.posM=j;		
-			pix.type=set_type(img_dist, i, j);
-			pix.border=set_border(img_dist, i, j);
-			pix.mult=set_mult(img_dist,i,j);
-			if(pix.type==1){
-			img_label=add_list(pix,img_label);
+		for(j=1;j<nc-1;j++){
+		if(img_dist[i][j]==0){
+			img_label_matrix[i][j]->fond=1;
+		}else{
+			img_label_matrix[i][j]->obj.border=set_border(img_dist,i,j);		
+			img_label_matrix[i][j]->obj.mult=set_mult(img_dist,i,j);
 			}
 		}
 	}
-	return img_label;
+
+	// Affichage 
+	for(i=0;i<nl;i++){
+		for(j=0;j<nc;j++){
+			print_pixel(*img_label_matrix[i][j],i,j);
+		}
+	}
 }
