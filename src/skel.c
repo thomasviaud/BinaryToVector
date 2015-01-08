@@ -67,7 +67,7 @@ void skelet(uint8_t ***img_dist, t_pixel ***img_label_matrix, uint32_t nl, uint3
 	// Affichage 
 	//for(i=0;i<nl;i++){
 		//for(j=0;j<nc;j++){
-			print_pixel(*img_label_matrix[0][0]);
+			//print_pixel(*img_label_matrix[0][0]);
 		//}
 	//}
 }
