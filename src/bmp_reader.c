@@ -253,7 +253,7 @@ BmpWorker_RawData_display(const BmpWorker_infoHeader * infoHeader,
   }
 }
 
-void
+int8_t
 BmpWorker_img_bin (uint8_t **img_bin, const BmpWorker_infoHeader * infoHeader,
                           const uint8_t * pData)
 {
@@ -261,29 +261,38 @@ BmpWorker_img_bin (uint8_t **img_bin, const BmpWorker_infoHeader * infoHeader,
   {
     uint32_t nPixels = infoHeader->img_width * infoHeader->img_height;
     uint8_t pixelValue;
-
     uint32_t pixelCounter = 0;
+    uint8_t byteCounter;
+    uint16_t nBytesPerPixel = infoHeader->bitspp / 8;
+
     for (pixelCounter = 0; pixelCounter < nPixels; pixelCounter++)
     {
-      uint8_t byteCounter = 0;
-      uint16_t nBytesPerPixel = infoHeader->bitspp / 8;
       uint8_t colorCode[nBytesPerPixel];
-
       for (byteCounter = 0; byteCounter < nBytesPerPixel; byteCounter++)
       {
         colorCode[byteCounter] = *pData;
         pData++;
       }
-      if ((colorCode[0] == 255) && (colorCode[1] == 255) && (colorCode[2] == 255)) pixelValue = 0;
-      else if ((colorCode[0] == 0) && (colorCode[1] == 0) && (colorCode[2] == 0)) pixelValue = 1;
-      else {
-        fprintf(stdout, "Votre image n'est pas une image binaire !\n");
-        return;
-      }
-      img_bin[pixelCounter/infoHeader->img_width][pixelCounter%infoHeader->img_width] = pixelValue; // Transforme la liste de pixels en matrice N*M avec N=height et M=width
 
+      uint8_t blackCode = 0;
+      uint8_t whiteCode = 0;
+
+      for (byteCounter = 0; byteCounter<nBytesPerPixel; byteCounter++)
+      {
+        if (colorCode[byteCounter] == 255) whiteCode++;
+        if (colorCode[byteCounter] == 0) blackCode++;
+      }
+
+      if (blackCode == nBytesPerPixel) pixelValue = 1;
+      else if (whiteCode == nBytesPerPixel) pixelValue = 0;
+      else {
+        return 0;
+      }
+
+      img_bin[pixelCounter/infoHeader->img_width][pixelCounter%infoHeader->img_width] = pixelValue;// Transforme la liste de pixels en matrice N*M avec N=height et M=width
     }
   }
+  return 1; 
 }
 
 

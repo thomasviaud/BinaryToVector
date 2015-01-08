@@ -18,7 +18,6 @@ main(void)
 	puts("BmpReader started.\n");
 
 	FILE * fBMP = fopen("./img/test_30x20.bmp","rb+");
-
 	if (fBMP != NULL)
 	{
 		puts("File opened.\n");
@@ -61,7 +60,11 @@ main(void)
 					alloc_matrix(&img_bin,height,width);
 
 					// Remplissage matrice img_bin
-					BmpWorker_img_bin(img_bin, bmpHeader, pData);
+					if (BmpWorker_img_bin(img_bin, bmpHeader, pData) == 0) 
+                    {
+                        fprintf(stderr, "Votre image n'est pas binaire !\n");
+                        return ERROR_INVALID_DATA;
+                    }
 
 					// Affichage matrice img_bin
 					puts("===== MATRICE BINAIRE =====");
@@ -89,13 +92,12 @@ main(void)
 					// Squelettisation
 					puts("===== SQUELETTE ====="); 
 					skelet(&img_dist, &img_label_matrix,height,width);
-
 				}
 				else
 				{
 					fprintf(stderr, "Can't read bitmap data\n");
 				}
-				//free(pData);
+				free(pData);
 		  }
 		  else
 		  {
