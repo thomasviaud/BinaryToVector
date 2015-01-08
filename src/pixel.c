@@ -78,72 +78,32 @@ char set_mult(uint8_t ***dist, uint32_t l, uint32_t c){
 		return 1;
 	}
 	return 0;
-
-/*
-
-	// Cas où les pixels NO, NE, SE et SO sont contour et les pixels N,E,S,O dans le fond
-
-	for(i=0;i<2*N1;i+=2){
-		dist_border1[i/2]=(*dist)[l+coord_cas1[i]][c+coord_cas1[i+1]];
-	}
-	// Comparaison de dist_border à model
-	for(i=0;i<N1+1;i++){
-		if(dist_border1[i%N1]==0 && (*dist)[(i+1)%N1]>=2){
-		cpt=cpt++;
-		}
-	}
-	if(cpt=!4){
-		return 1;
-	}
-
-	// Cas où les pixels NO, NE, SE et SO sont contour et les pixels N,E,S,O dans le fond
-	char model_cas2[N2]={1,0,1,0,1,0,1,0};
-	char dist_border2[N2];
-
-	for(i=0;i<2*N2;i+=2){
-		dist_border2[i/2]=(*dist)[l+coord_cas2[i]][c+coord_cas2[i+1]];
-	}
-
-	// Comparaison de dist_border à model
-	cpt=0;
-	for(i=0;i<N2+1;i++){
-		if(dist_border2[i]==model_cas2[i]){
-		cpt++;
-		}
-	}
-	if(cpt==8){
-		return 1;
-	}
-    return 0;*/
 }
 //
 // print_pixel
 // Prend en argument un pixel
 // et l'affiche dans la console
 //
-void print_pixel(t_pixel pix, uint32_t l, uint32_t c){
-	int i,j;
-	for(i=0;i<l;i++){
-		for(j=0;j<c;j++){
-			if(img_label_matrix[i][j].fond==1){
+void print_pixel(t_pixel pix){
+//	int i,j;
+			if(pix.fond==1){
 				(void)printf("F--");
 				return;
 			}else{
 				(void)printf("O");
 			}
 
-			if(img_label_matrix[i][j].obj.border==1){
+			if(pix.obj.border==1){
 				(void)printf("C");
 			}else{
 				(void)printf("I");
 			}
 
-			if(img_label_matrix[i][j].obj.mult==0){
+			if(pix.obj.mult==0){
 				(void)printf("-");
 			}else{
 				(void)printf("M");
 			}
-		}
-		(void)printf("\n");
-	}
+			(void)printf("\n");
+	
 }
