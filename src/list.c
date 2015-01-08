@@ -37,7 +37,7 @@ int is_void(t_plist list){
 //
 t_plist add_list (t_pixel pix, t_plist list){
 	t_plist new;
-	new =(t_plist)malloc(sizeof(t_list));
+	new =(t_plist)malloc(sizeof(t_maillon));
 	new->v_pixel=pix;
 	new->next=list;
 	return list;
@@ -70,10 +70,11 @@ t_plist end_list(t_plist list){
 void print_list(t_plist list){
 	int cpt=0;
 	while(list!=NULL){
-		//print_pixel(head_list(list));
+		print_pixel_list(head_list(list));
 		printf("\t");
 		list=end_list(list);        
 		cpt++;
+		// Retour à la ligne
 		if(cpt==5){
 			printf("\n");
 			cpt=0;

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////
-// pixel.c                                                //
+// pixel.c                                               //
 // Contient les fonctions relatives à la gestion des     //
-// pixel                                               //
+// pixel                                               	 //
 ///////////////////////////////////////////////////////////
 
 #include <stdio.h>
@@ -12,14 +12,12 @@
 #define N2 8
 #include "../inc/pixel.h"
 #include "../inc/list.h"
-char set_type(uint8_t **dist, uint32_t l, uint32_t c){
-	if(dist[l][c]>0){
-		return 1;
-	}else{
-		return 0;
-	}
-}
-
+//
+// set_border
+// Prend en argument une matrice, ainsi que la paire de coordonnées d'une case
+// de celle-ci
+// Retourne 2 si le pixel est dans le contour, 3 s'il est interne. 
+//
 char set_border(uint8_t **dist, uint32_t l, uint32_t c){
 	if(dist[l][c]==1){
 		return 2;
@@ -27,7 +25,12 @@ char set_border(uint8_t **dist, uint32_t l, uint32_t c){
 		return 3;
 	}
 }
-
+//
+// set_mult
+// Prend en argument une matrice, ainsi que la paire de coordonnées d'une case
+// de celle-ci
+// Retourne 1 si le pixel est un pixel multiple, 0 sinon.
+//
 char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 
 // Déclarations
@@ -90,13 +93,12 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 }
 //
 // print_pixel
-// Prend en argument un pixel
-// et l'affiche dans la console
+// Prend en argument un pixel dans un tableau de pixel
+// et l'affiche dans la console sous le format TYPE CONTOUR MULTIPLE
 //
 void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
-//	int i,j;
 			if(pix[l][c].obj.border==1){
-				(void)printf("F-- ");
+				(void)printf("    ");
 				return;
 			}else{
 				(void)printf("O");
@@ -112,4 +114,28 @@ void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
 				(void)printf("I- ");
 			}
 			
+}
+
+//
+// print_pixel_list
+// Prend en argument un pixel
+// et l'affiche dans la console sous le format TYPE CONTOUR MULTIPLE
+//
+void print_pixel_list(t_pixel pix){
+			if(pix.obj.border==1){
+				(void)printf("    ");
+				return;
+			}else{
+				(void)printf("O");
+			}
+			if(pix.obj.border==2){
+				(void)printf("C");
+				if(pix.obj.mult==1){
+				(void)printf("M ");
+				}else{				
+				(void)printf("- ");
+				}
+			}else if(pix.obj.border==3){
+				(void)printf("I- ");
+			}			
 }

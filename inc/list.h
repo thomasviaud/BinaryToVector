@@ -1,9 +1,9 @@
 #ifndef __LIST_H__
 #define __LIST_H__
-typedef struct list{
+typedef struct maillon{
     t_pixel v_pixel;
-    struct list *next;
-} t_list, *t_plist;
+    struct maillon *next;
+} t_maillon, *t_plist;
 
 t_plist create_void (void);
 int is_void (t_plist list);

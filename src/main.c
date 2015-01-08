@@ -17,7 +17,7 @@ main(void)
 {
 	puts("BmpReader started.\n");
 
-	FILE * fBMP = fopen("./img/test_20x20.bmp","rb+");
+	FILE * fBMP = fopen("./img/lemachin.bmp","rb+");
 	if (fBMP != NULL)
 	{
 		puts("File opened.\n");
@@ -44,7 +44,7 @@ main(void)
 				if (BmpWorker_RawData_read(fBMP, fileHeader, bmpHeader, pData) == SUCCESS)
 				{
 					//Uncomment for testing following functions
-					//BmpWorker_RawData_display(bmpHeader, pData);
+					BmpWorker_RawData_display(bmpHeader, pData);
 					//BmpWorker_RawData_white2black(bmpHeader, pData);
 					//BmpWorker_RawData_display(bmpHeader, pData);
 					//BmpWorker_saveOnDisk("../img/test.bmp", fileHeader, bmpHeader, pData);
@@ -86,12 +86,18 @@ main(void)
 					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(&img_dist,height,width);
 
-					// Déclaration et allocation en mémoire de img_label
+					// Déclaration et allocation en mémoire de img_label_matrix
 					t_pixel **img_label_matrix;
 					alloc_label_matrix(&img_label_matrix,height,width);
+
+					// Déclaration et initialisation de img_label_list
+					t_plist img_label_list;
+					img_label_list=create_void();
+
 					// Squelettisation
 					puts("===== SQUELETTE ====="); 
-					skelet(img_dist, img_label_matrix,height,width);
+					skelet(img_dist, img_label_matrix, img_label_list, height,width);
+					
 				}
 				else
 				{

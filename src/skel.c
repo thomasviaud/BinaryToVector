@@ -13,11 +13,14 @@
 #include "../inc/skel.h"
 //
 // skelet
-// Prend en argument la matrice de transformée en distance ainsi que sa taille
-// Renvoi le pointeur vers le premier élément de la liste img_label
-
-void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, uint32_t nl, uint32_t nc){
+// Prend en argument la matrice de transformée en distance,
+// la matrice contenant les labels et leurs tailles.
+// Ne renvoi rien
+//
+void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist img_label_list, uint32_t nl, uint32_t nc){
 	uint32_t i,j;
+
+// Construction de la matric img_label
 	// Contour de la matrice img_label
 	for(i=0;i<nl;i++){
 		// Première colonne gauche
@@ -52,6 +55,8 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, uint32_t nl, uint32_
 			img_label_matrix[nl-1][j].obj.mult=1;
 		}
 	}
+	/* *********************** */
+
 	// Partie interne de la matrice
 	for(i=1;i<nl-1;i++){
 		for(j=1;j<nc-1;j++){
@@ -63,21 +68,24 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, uint32_t nl, uint32_
 			}
 		}
 	}
-	
-	// Affichage 
-	printf("nl : %d || nc : %d\n", nl,nc);
+	/*  *********************** */
+
+	// Affichage de la matrice img_label
 	for(i=0;i<nl;i++){
 		for(j=0;j<nc;j++){
 			print_pixel(img_label_matrix,i,j);
 		}							
-		(void)printf("\n");
+		(void)printf("\n\n");
 	}
-	/*
+/*  ************************************ */
+
+// Construction de la liste chaînée img_label
 	for(i=0;i<nl;i++){
 		for(j=0;j<nc;j++){
-			if(img_dist[i][0]==0){
-			img_label_matrix[i][j].obj.border=set_mult(img_dist,i,j);
+			if(img_label_matrix[i][j].obj.border>1){
+				img_label_list=add_list(img_label_matrix[i][j], img_label_list);
 			}
-		}
-	}*/
+		}					
+	}
+	print_list(img_label_list);
 }

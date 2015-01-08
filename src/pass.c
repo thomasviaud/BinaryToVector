@@ -39,7 +39,8 @@ void disp_matrix(uint8_t ***pX, uint32_t nl, uint32_t nc)
 	{
 		for(j=0; j<nc;j++)
 		{
-			printf("%d ",(*pX)[i][j]);
+			if((*pX)[i][j])printf("%d ",(*pX)[i][j]);
+            else(printf("  "));
 		}
 		printf("\n");
 	}

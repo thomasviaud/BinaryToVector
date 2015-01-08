@@ -15,4 +15,5 @@ char set_type(uint8_t **dist, uint32_t l, uint32_t c);
 char set_border(uint8_t **dist, uint32_t l, uint32_t c);
 char set_mult(uint8_t **dist, uint32_t l, uint32_t c);
 void print_pixel(t_pixel **pix, uint32_t l, uint32_t c);
+void print_pixel_list(t_pixel pix);
 #endif
