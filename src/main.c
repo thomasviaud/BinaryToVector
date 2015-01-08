@@ -17,7 +17,7 @@ main(void)
 {
 	puts("BmpReader started.\n");
 
-	FILE * fBMP = fopen("./img/test_30x20.bmp","rb+");
+	FILE * fBMP = fopen("./img/test_20x20.bmp","rb+");
 	if (fBMP != NULL)
 	{
 		puts("File opened.\n");
@@ -86,12 +86,12 @@ main(void)
 					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(&img_dist,height,width);
 
-					// Déclaration img_label
+					// Déclaration et allocation en mémoire de img_label
 					t_pixel **img_label_matrix;
 					alloc_label_matrix(&img_label_matrix,height,width);
 					// Squelettisation
 					puts("===== SQUELETTE ====="); 
-					skelet(&img_dist, &img_label_matrix,height,width);
+					skelet(img_dist, img_label_matrix,height,width);
 				}
 				else
 				{

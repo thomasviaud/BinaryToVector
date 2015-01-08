@@ -12,25 +12,23 @@
 #define N2 8
 #include "../inc/pixel.h"
 #include "../inc/list.h"
-char set_type(uint8_t ***dist, uint32_t l, uint32_t c){
-	if((*dist)[l][c]>0){
+char set_type(uint8_t **dist, uint32_t l, uint32_t c){
+	if(dist[l][c]>0){
 		return 1;
 	}else{
 		return 0;
 	}
 }
 
-char set_border(uint8_t ***dist, uint32_t l, uint32_t c){
-	if((*dist)[l][c]==1){
-		return 1;
-	}else if((*dist)[l][c]>1){
+char set_border(uint8_t **dist, uint32_t l, uint32_t c){
+	if(dist[l][c]==1){
 		return 2;
 	}else{
-		return 0;
+		return 3;
 	}
 }
 
-char set_mult(uint8_t ***dist, uint32_t l, uint32_t c){
+char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 
 // Déclarations
 	int i;
@@ -54,20 +52,20 @@ char set_mult(uint8_t ***dist, uint32_t l, uint32_t c){
 	// et Interne"
 	//
 
-	// Création du tableau contenant les voisins du pixel (*dist)[l][c] dans 
+	// Création du tableau contenant les voisins du pixel dist[l][c] dans 
 	// l'ordre horaire
 	for(i=0;i<2*N1;i+=2){
-		dist_border1[i/2]=(*dist)[l+coord_cas1[i]][c+coord_cas1[i+1]];
+		dist_border1[i/2]=dist[l+coord_cas1[i]][c+coord_cas1[i+1]];
 	}
 
 	// Vérification des labels Fond et Interne
 	for(i=0;i<N1/2;i++){
-		// Voisins de type 0 - 2
-		if(dist_border1[i]==0 && dist_border1[i+2]>1){
+		// Voisins de type 0 - 2+
+		if(dist_border1[i]==0 || dist_border1[i+2]>1){
 			cpt1++;
 		}
-		// Voisins de type 2 - 0
-		else if(dist_border1[i+2]==0 && dist_border1[i]>1){
+		// Voisins de type 2+ - 0
+		else if(dist_border1[i+2]==0 || dist_border1[i]>1){
 			cpt1_bis++;
 		}
 	}
@@ -76,7 +74,7 @@ char set_mult(uint8_t ***dist, uint32_t l, uint32_t c){
 	// Cas où les pixels NO, NE, SE et SO sont contour et les pixels N,E,S,O dans le fond
 	//
 	for(i=0;i<2*N2;i+=2){
-		dist_border2[i/2]=(*dist)[l+coord_cas2[i]][c+coord_cas2[i+1]];
+		dist_border2[i/2]=dist[l+coord_cas2[i]][c+coord_cas2[i+1]];
 	}
 	// Comparaison entre dist_border2 et la chaîne model
 	for(i=0;i<N2+1;i++){
@@ -84,36 +82,34 @@ char set_mult(uint8_t ***dist, uint32_t l, uint32_t c){
 			cpt2++;
 		}
 	}
-	if(cpt2==8 || (cpt1+cpt1_bis)<2){
+	if(cpt2==8 || (cpt1+cpt1_bis)==2){
 		return 1;
-	}
+	}else{
 	return 0;
+	}
 }
 //
 // print_pixel
 // Prend en argument un pixel
 // et l'affiche dans la console
 //
-void print_pixel(t_pixel pix){
+void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
 //	int i,j;
-			if(pix.fond==1){
-				(void)printf("F--");
+			if(pix[l][c].obj.border==1){
+				(void)printf("F-- ");
 				return;
 			}else{
 				(void)printf("O");
 			}
-
-			if(pix.obj.border==1){
+			if(pix[l][c].obj.border==2){
 				(void)printf("C");
-			}else{
-				(void)printf("I");
+				if(pix[l][c].obj.mult==1){
+				(void)printf("M ");
+				}else{				
+				(void)printf("- ");
+				}
+			}else if(pix[l][c].obj.border==3){
+				(void)printf("I- ");
 			}
-
-			if(pix.obj.mult==0){
-				(void)printf("-");
-			}else{
-				(void)printf("M");
-			}
-			(void)printf("\n");
-	
+			
 }
