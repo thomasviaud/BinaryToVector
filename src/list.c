@@ -40,7 +40,7 @@ t_plist add_list (t_pixel pix, t_plist list){
 	new =(t_plist)malloc(sizeof(t_maillon));
 	new->v_pixel=pix;
 	new->next=list;
-	return list;
+	return new;
 }
 
 //
@@ -75,7 +75,7 @@ void print_list(t_plist list){
 		list=end_list(list);        
 		cpt++;
 		// Retour à la ligne
-		if(cpt==5){
+		if(cpt==15){
 			printf("\n");
 			cpt=0;
 			}

@@ -17,7 +17,7 @@
 // la matrice contenant les labels et leurs tailles.
 // Ne renvoi rien
 //
-void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist img_label_list, uint32_t nl, uint32_t nc){
+void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc){
 	uint32_t i,j;
 
 // Construction de la matric img_label
@@ -83,9 +83,8 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist img_label_li
 	for(i=0;i<nl;i++){
 		for(j=0;j<nc;j++){
 			if(img_label_matrix[i][j].obj.border>1){
-				img_label_list=add_list(img_label_matrix[i][j], img_label_list);
+				(*img_label_list)=add_list(img_label_matrix[i][j], *img_label_list);
 			}
 		}					
 	}
-	print_list(img_label_list);
 }
