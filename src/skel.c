@@ -19,6 +19,7 @@
 //
 void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc){
 	uint32_t i,j;
+	int cpt=0;
 
 // Construction de la matric img_label
 	// Contour de la matrice img_label
@@ -82,9 +83,16 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_l
 // Construction de la liste chaînée img_label
 	for(i=0;i<nl;i++){
 		for(j=0;j<nc;j++){
-			if(img_label_matrix[i][j].obj.border>1){
+			if(img_label_matrix[i][j].obj.border==2){
 				(*img_label_list)=add_list(img_label_matrix[i][j], *img_label_list);
 			}
 		}					
 	}
+// Vérification de la condition de d'arrêt de l'algorithme
+	while(img_label_list!=NULL){
+		if((*img_label_list)->v_pixel.obj.mult==0) cpt++;
+		img_label_list=end_list(img_label_list);	
+	}
+	printf("%d",cpt);
+
 }

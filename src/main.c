@@ -44,7 +44,7 @@ main(void)
 				if (BmpWorker_RawData_read(fBMP, fileHeader, bmpHeader, pData) == SUCCESS)
 				{
 					//Uncomment for testing following functions
-					BmpWorker_RawData_display(bmpHeader, pData);
+					//BmpWorker_RawData_display(bmpHeader, pData);
 					//BmpWorker_RawData_white2black(bmpHeader, pData);
 					//BmpWorker_RawData_display(bmpHeader, pData);
 					//BmpWorker_saveOnDisk("../img/test.bmp", fileHeader, bmpHeader, pData);

@@ -1,9 +1,9 @@
 #ifndef __PIXEL_H__
 #define __PIXEL_H__
 typedef struct{
-    	char border;   	// 0 : interne  1 : contour
+    	char border;   	// 2 : contour	3 : interne
     	char mult;      // 0 : !mult    1 : mult
-
+    	char squel;		// 0 : !squel   1 : squel
 	}objet;
 
 typedef union{
