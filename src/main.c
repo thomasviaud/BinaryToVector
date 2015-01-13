@@ -17,7 +17,7 @@ main(void)
 {
 	puts("BmpReader started.\n");
 
-	FILE * fBMP = fopen("./img/test_20x20.bmp","rb+");
+	FILE * fBMP = fopen("./img/test_10x10.bmp","rb+");
 	if (fBMP != NULL)
 	{
 		puts("File opened.\n");
@@ -97,9 +97,12 @@ main(void)
 					// Squelettisation
 					puts("===== SQUELETTE ====="); 
 					skelet(img_dist, img_label_matrix, &img_label_list, height,width);
-					
 					puts("===== LISTE =====");					
 					print_list(img_label_list);
+
+
+					puts("===== SQUELETTE ====="); 
+					
 				}
 				else
 				{

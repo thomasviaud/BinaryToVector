@@ -75,7 +75,7 @@ void print_list(t_plist list){
 		list=end_list(list);        
 		cpt++;
 		// Retour à la ligne
-		if(cpt==15){
+		if(cpt==10){
 			printf("\n");
 			cpt=0;
 			}

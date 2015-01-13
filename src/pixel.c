@@ -29,14 +29,14 @@ char set_border(uint8_t **dist, uint32_t l, uint32_t c){
 // set_mult
 // Prend en argument une matrice, ainsi que la paire de coordonnées d'une case
 // de celle-ci
-// Retourne 1 si le pixel est un pixel multiple, 0 sinon.
+// Retourne 2 si le pixel est un pixel multiple, 1 sinon.
 //
 char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 
 // Déclarations
 	int i;
 	// Compteur de comparaison entre les modèles et les tableaux des voisins
-	int cpt1=0, cpt1_bis=0;
+	int cpt1=0, cpt1_1=0, cpt1_2=0, cpt1_3=0, cpt1_4=0;
 	int cpt2=0;
 	// Modèle du type des pixels dans le cas 2
 	char model[N2]={1,0,1,0,1,0,1,0};
@@ -63,14 +63,16 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 
 	// Vérification des labels Fond et Interne
 	for(i=0;i<N1/2;i++){
-		// Voisins de type 0 - 2+
-		if(dist_border1[i]==0 || dist_border1[i+2]>1){
-			cpt1++;
-		}
-		// Voisins de type 2+ - 0
-		else if(dist_border1[i+2]==0 || dist_border1[i]>1){
-			cpt1_bis++;
-		}
+		// Voisins de type 0 - 1
+		if(dist_border1[i]==0 && dist_border1[i+2]==1) cpt1++;
+		// Voisins de type 1 - 0
+		else if(dist_border1[i+2]==0 && dist_border1[i]==1) cpt1_1++;
+		// Voisins de type 2+ - 1
+		else if(dist_border1[i+2]==1 && dist_border1[i]>1) cpt1_2++;
+		// Voisins de type 1 - 2+
+		else if(dist_border1[i]==1 && dist_border1[i+2]>1) cpt1_3++;		
+		// Voisins de type x - x
+		else if(dist_border1[i]==dist_border1[i+2]) cpt1_4++;
 	}
 	
 	//
@@ -85,10 +87,10 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 			cpt2++;
 		}
 	}
-	if(cpt2==8 || (cpt1+cpt1_bis)==2){
-		return 1;
+	if(cpt2==8 || (cpt1 + cpt1_1 +cpt1_2 + cpt1_3 + cpt1_4)==2){
+		return 2;
 	}else{
-	return 0;
+	return 1;
 	}
 }
 //
@@ -96,7 +98,11 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 // Prend en argument un pixel dans un tableau de pixel
 // et l'affiche dans la console sous le format TYPE CONTOUR MULTIPLE
 //
-void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
+void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){	
+			if(pix[l][c].obj.squel==2){
+				(void)printf("S   ");
+				return;
+			}
 			if(pix[l][c].obj.border==1){
 				(void)printf("    ");
 				return;
@@ -105,13 +111,13 @@ void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
 			}
 			if(pix[l][c].obj.border==2){
 				(void)printf("C");
-				if(pix[l][c].obj.mult==1){
+				if(pix[l][c].obj.mult==2){
 				(void)printf("M ");
 				}else{				
 				(void)printf("- ");
 				}
 			}else if(pix[l][c].obj.border==3){
-				(void)printf("I- ");
+				(void)printf("I  ");
 			}
 			
 }
@@ -122,20 +128,34 @@ void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
 // et l'affiche dans la console sous le format TYPE CONTOUR MULTIPLE
 //
 void print_pixel_list(t_pixel pix){
-			if(pix.obj.border==1){
-				(void)printf("    ");
-				return;
-			}else{
-				(void)printf("O");
-			}
-			if(pix.obj.border==2){
-				(void)printf("C");
-				if(pix.obj.mult==1){
-				(void)printf("M ");
-				}else{				
-				(void)printf("- ");
-				}
-			}else if(pix.obj.border==3){
-				(void)printf("I- ");
-			}			
+	if(pix.obj.border==1){
+		(void)printf("    ");
+		return;
+	}else{
+		(void)printf("O");
+	}
+	if(pix.obj.border==2){
+		(void)printf("C");
+		if(pix.obj.mult==2){
+		(void)printf("M");
+		}else if(pix.obj.mult==1){				
+		(void)printf("-");
+		}
+	}else if(pix.obj.border==3){
+		(void)printf("I-");
+	}
+}
+//
+// disp_matrix_label
+// Prend en argument un ne matrice de pixel et sa taille
+// et l'affiche dans la console 
+//
+void disp_matrix_label(t_pixel **img_label_matrix, uint32_t nl, uint32_t nc){
+	int i,j;
+	for(i=0;i<nl;i++){
+		for(j=0;j<nc;j++){
+			print_pixel(img_label_matrix,i,j);
+		}							
+		(void)printf("\n\n");
+	}
 }
