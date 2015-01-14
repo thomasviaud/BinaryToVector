@@ -11,6 +11,7 @@
 #include "../inc/pixel.h"
 #include "../inc/list.h"
 #include "../inc/skel.h"
+#include "../inc/point.h"
 #define NAMESIZE 255
 
 int main(void){
@@ -22,6 +23,7 @@ int main(void){
 	printf("|        HOAREAU Jordan           VIAUD Thomas      |\n");
 	printf("|                   IRM 3A 2014/2015                |\n");
 	printf("=====================================================\n");
+
 	// Saisie du nom de l'image
 	puts("\n\nEntrez le nom de l'image souhaitée stockée dans le dossier img sous le format .bmp : ");
 	char *nom_img;
@@ -112,6 +114,14 @@ int main(void){
 					// Squelettisation
 					puts("===== SQUELETTISATION ====="); 
 					skelet(img_dist, img_label_matrix, &img_label_list, height,width);
+
+					// Déclaration et allocation en mémoire de img_point_matrix
+					t_point ** img_point_matrix;
+					alloc_point_matrix(&img_point_matrix,height,width);
+					// Douglas-Peucker
+					puts("===== MATRICE POINT =====");
+					printf("Po = Point\nBo = Borne\nNo = Noeud\nBi = Bifurcation\n");
+					set_point_matrix(img_point_matrix,img_label_matrix,height,width);
 				}
 				else
 				{

@@ -48,7 +48,7 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 // Déclarations
 	int i;
 	// Compteur de comparaison entre les modèles et les tableaux des voisins
-	int cpt1=0, cpt1_1=0, cpt1_2=0, cpt1_3=0, cpt1_4=0;
+	int cpt1=0;
 	int cpt2=0;
 	// Modèle du type des pixels dans le cas 2
 	char model[N2]={1,0,1,0,1,0,1,0};
@@ -78,13 +78,13 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 		// Voisins de type 0 - 1
 		if(dist_border1[i]==0 && dist_border1[i+2]==1) cpt1++;
 		// Voisins de type 1 - 0
-		else if(dist_border1[i+2]==0 && dist_border1[i]==1) cpt1_1++;
+		else if(dist_border1[i+2]==0 && dist_border1[i]==1) cpt1++;
 		// Voisins de type 2+ - 1
-		else if(dist_border1[i+2]==1 && dist_border1[i]>1) cpt1_2++;
+		else if(dist_border1[i+2]==1 && dist_border1[i]>1) cpt1++;
 		// Voisins de type 1 - 2+
-		else if(dist_border1[i]==1 && dist_border1[i+2]>1) cpt1_3++;		
+		else if(dist_border1[i]==1 && dist_border1[i+2]>1) cpt1++;		
 		// Voisins de type x - x
-		else if(dist_border1[i]==dist_border1[i+2]) cpt1_4++;
+		else if(dist_border1[i]==dist_border1[i+2]) cpt1++;
 	}
 	
 	//
@@ -99,7 +99,7 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 			cpt2++;
 		}
 	}
-	if(cpt2==8 || (cpt1 + cpt1_1 +cpt1_2 + cpt1_3 + cpt1_4)==2){
+	if(cpt2==8 || cpt1==2){
 		return 2;
 	}else{
 	return 1;
