@@ -14,20 +14,40 @@
 //
 // skelet
 // Prend en argument la matrice de transformée en distance,
-// la matrice contenant les labels et leurs tailles.
+// la matrice contenant les labels, leurs tailles et la liste chaînée 
+// contenant les labels.
 // Ne renvoi rien
 //
 void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc){
-	uint32_t i,j;
 	t_plist list_copy;
-	int cpt_mult;
-	int cpt_border;
-
+	int cpt_mult, cpt_border;
+	int mult_border;
+	int etape=1;
 	do{
-		(*img_label_list)=NULL;		
+		(*img_label_list)=NULL;
+		list_copy=NULL;		
 		cpt_mult=0;
 		cpt_border=0;
-		// Construction de la matric img_label
+		build_img_label(img_dist,img_label_matrix, nl, nc);
+		printf("===== CONTOUR %d =====",etape);
+		disp_matrix_label(img_label_matrix,nl,nc);
+		build_img_list(img_label_matrix, img_label_list,nl,nc);
+		mult_border=skelet_condition(cpt_border,cpt_mult,list_copy,img_label_list);
+		delete_current_border(img_dist, nl, nc);
+		etape++;
+	}while(mult_border);
+	printf("===== SQUELETTE =====\n");
+	disp_skel(img_label_matrix, nl, nc);
+}
+//
+// build_img_label
+// Prend en argument la matrice de transformée en distance,
+// la matrice contenant les labels et leurs tailles.
+// Ne renvoi rien
+//
+void build_img_label(uint8_t **img_dist, t_pixel **img_label_matrix, uint32_t nl, uint32_t nc){
+	int i,j;
+	// Construction de la matric img_label
 			// Contour de la matrice img_label
 			for(i=0;i<nl;i++){
 				// Première colonne gauche
@@ -74,45 +94,55 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_l
 					}
 				}
 			}
-			/*  *********************** */
-
-			// Affichage de la matrice img_label
-			for(i=0;i<nl;i++){
-				for(j=0;j<nc;j++){
-					print_pixel(img_label_matrix,i,j);
-				}							
-				(void)printf("\n\n");
+}
+//
+// build_img_list
+// Prend en argument la matrice contenant les labels,
+// sa taille et la liste chaînée contenant les labels.
+// Ne renvoi rien
+//
+void build_img_list(t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc){
+	int i,j;	
+	for(i=0;i<nl;i++){
+		for(j=0;j<nc;j++){
+			if(img_label_matrix[i][j].obj.border==2){
+				(*img_label_list)=add_list(img_label_matrix[i][j], *img_label_list);
 			}
-		/*  ************************************ */
-
-		// Construction de la liste chaînée img_label
-			for(i=0;i<nl;i++){
-				for(j=0;j<nc;j++){
-					if(img_label_matrix[i][j].obj.border==2){
-						(*img_label_list)=add_list(img_label_matrix[i][j], *img_label_list);
-						printf("[%d][%d] ",i,j);
-					}
-					if(img_label_matrix[i][j].obj.mult==2) img_label_matrix[i][j].obj.squel=2;
-				}					
-			}
-
-		// Vérification de la condition de d'arrêt de l'algorithme
-			list_copy=(*img_label_list);
-			while(list_copy!=NULL){
-				if(list_copy->v_pixel.obj.mult==2) cpt_mult++;
-				cpt_border++;
-				list_copy=end_list(list_copy);	
-			}
-			printf("\n%d multiples à cette itération\n",cpt_mult);
-			printf("%d pixels contours\n",cpt_border);
-
-		// Décrémentation des valeurs de img_dist pour recommencer au contour
-		// suivant
-			for(i=0;i<nl;i++){
-				for(j=0;j<nc;j++){
-					if(img_dist[i][j]>0) img_dist[i][j]--;
-				}
-			}
-	}while(cpt_border!=cpt_mult);
+			if(img_label_matrix[i][j].obj.mult==2) img_label_matrix[i][j].obj.squel=2;
+		}					
+	}
 }
 
+//
+// skelet_condition
+// Prend en argument deux compteurs,
+// la liste chaînée contenant les labels et un pointeur sur cette liste
+// Renvoie 0 si tous les pixels contours sont multiples, 1 sinon
+//
+int skelet_condition(int cpt_border,int cpt_mult,t_plist list_copy, t_plist* img_label_list){
+	// Vérification de la condition de d'arrêt de l'algorithme
+		list_copy=(*img_label_list);
+		while(list_copy!=NULL){
+			if(list_copy->v_pixel.obj.mult==2) cpt_mult++;
+			cpt_border++;
+			list_copy=end_list(list_copy);	
+		}
+		if(cpt_border==cpt_mult) return 0;
+		else return 1;
+}
+//
+// delete_current_border
+// Prend en argument la matrice de transformée en distance et,
+// sa taille.
+// Ne renvoie rien
+//
+void delete_current_border(uint8_t** img_dist,uint32_t nl,uint32_t nc){
+	int i,j;
+	// Décrémentation des valeurs de img_dist pour recommencer au contour
+	// suivant
+	for(i=0;i<nl;i++){
+		for(j=0;j<nc;j++){
+			if(img_dist[i][j]>0) img_dist[i][j]--;
+		}
+	}
+}

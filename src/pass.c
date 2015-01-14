@@ -12,16 +12,6 @@
 #include "../inc/pixel.h"
 #include "../inc/pass.h"
 
-void alloc_label_matrix(t_pixel ***pA, uint32_t nl, uint32_t nc){
-    int i;
-    *pA = (t_pixel **)malloc(nl * sizeof(t_pixel *)) ;
-    for (i=0; i<nl; i++)
-    {
-        (*pA)[i] = (t_pixel *)malloc(nc * sizeof(t_pixel)) ;
-    }
-
-
-}
 void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc)
 {
 	int i ;

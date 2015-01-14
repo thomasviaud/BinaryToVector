@@ -12,6 +12,18 @@
 #define N2 8
 #include "../inc/pixel.h"
 #include "../inc/list.h"
+
+
+void alloc_label_matrix(t_pixel ***pA, uint32_t nl, uint32_t nc){
+    int i;
+    *pA = (t_pixel **)malloc(nl * sizeof(t_pixel *)) ;
+    for (i=0; i<nl; i++)
+    {
+        (*pA)[i] = (t_pixel *)malloc(nc * sizeof(t_pixel)) ;
+    }
+
+
+}
 //
 // set_border
 // Prend en argument une matrice, ainsi que la paire de coordonnées d'une case
@@ -98,11 +110,7 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 // Prend en argument un pixel dans un tableau de pixel
 // et l'affiche dans la console sous le format TYPE CONTOUR MULTIPLE
 //
-void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){	
-			if(pix[l][c].obj.squel==2){
-				(void)printf("S   ");
-				return;
-			}
+void print_pixel(t_pixel **pix, uint32_t l, uint32_t c){
 			if(pix[l][c].obj.border==1){
 				(void)printf("    ");
 				return;
@@ -158,4 +166,18 @@ void disp_matrix_label(t_pixel **img_label_matrix, uint32_t nl, uint32_t nc){
 		}							
 		(void)printf("\n\n");
 	}
+}
+
+void disp_skel(t_pixel **img_label_matrix, uint32_t nl, uint32_t nc){
+	int i,j;
+	for(i=0;i<nl;i++){
+		for(j=0;j<nc;j++){
+			print_pixel_skel(img_label_matrix,i,j);
+		}							
+		(void)printf("\n\n");
+	}
+}
+void print_pixel_skel(t_pixel **pix, uint32_t l, uint32_t c){		
+	if(pix[l][c].obj.squel==2) (void)printf("S   ");
+	else printf("    ");
 }

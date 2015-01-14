@@ -11,13 +11,28 @@
 #include "../inc/pixel.h"
 #include "../inc/list.h"
 #include "../inc/skel.h"
+#define NAMESIZE 255
 
-int
-main(void)
-{
-	puts("BmpReader started.\n");
+int main(void){
+	
+	system("clear");
+	printf("=====================================================\n");
+	printf("|                VECTORISATION D'IMAGE              |\n");
+	printf("|        Projet Algorithmique et Programmation      |\n");
+	printf("|        HOAREAU Jordan           VIAUD Thomas      |\n");
+	printf("|                   IRM 3A 2014/2015                |\n");
+	printf("=====================================================\n");
+	// Saisie du nom de l'image
+	puts("\n\nEntrez le nom de l'image souhaitée stockée dans le dossier img sous le format .bmp : ");
+	char *nom_img;
+	nom_img=(char*)malloc(NAMESIZE*sizeof(char));
+	scanf("%s",nom_img);
+	char path[]="./img/";
+	char format[]=".bmp";
+	strcat(path,nom_img);
+	strcat(path,format);
 
-	FILE * fBMP = fopen("./img/test_10x10.bmp","rb+");
+	FILE * fBMP = fopen(path,"rb+");
 	if (fBMP != NULL)
 	{
 		puts("File opened.\n");
@@ -95,14 +110,8 @@ main(void)
 					img_label_list=create_void();
 
 					// Squelettisation
-					puts("===== SQUELETTE ====="); 
+					puts("===== SQUELETTISATION ====="); 
 					skelet(img_dist, img_label_matrix, &img_label_list, height,width);
-					puts("===== LISTE =====");					
-					print_list(img_label_list);
-
-
-					puts("===== SQUELETTE ====="); 
-					
 				}
 				else
 				{
