@@ -9,6 +9,7 @@
 #include "../inc/bmp_reader.h"
 #include "../inc/pass.h"
 #include "../inc/pixel.h"
+#include "../inc/matrix.h"
 #include "../inc/list.h"
 #include "../inc/skel.h"
 #include "../inc/point.h"
@@ -85,27 +86,40 @@ int main(void){
 
 					// Affichage matrice img_bin
 					puts("===== MATRICE BINAIRE =====");
-					disp_matrix(&img_bin,height,width);
+					disp_matrix(img_bin,height,width);
 
-					// Déclaration img_dist + Duplication img_bin
+					// Déclaration img_bin_borders et duplication
+					uint8_t **img_bin_borders;
+					alloc_matrix(&img_bin_borders,height+2,width+2);
+					dup_matrix_wborders(img_bin,img_bin_borders,height,width);
+
+					// Déclaration img_dist et duplication
 					uint8_t **img_dist;
-					alloc_matrix(&img_dist,height,width);
-					int i=0;
-					for(i = 0; i < height; ++ i) memcpy(&(img_dist[i][0]), &(img_bin[i][0]), height * sizeof(uint8_t));
+					alloc_matrix(&img_dist,height+2,width+2);
+					dup_matrix(img_bin_borders,img_dist,height+2,width+2);
 
+					puts("===== MATRICE BINAIRE COPIEE =====");
+					disp_matrix(img_bin_borders,height+2,width+2);
+					/*********************************/
+					/*    TRANSFORMEE EN DISTANCE    */
+					/*********************************/
 					// Première passe
-					first_pass(&img_bin, &img_dist, height, width);
+					first_pass(img_bin_borders, img_dist, height, width);
 					puts("===== MATRICE PASSE 1 =====");
-					disp_matrix(&img_dist,height,width);
+					disp_matrix(img_dist,height+2,width+2);
 
 					// Seconde passe
-					last_pass(&img_bin, &img_dist, height, width);
+					last_pass(img_bin_borders, img_dist, height, width);
 					puts("===== MATRICE PASSE 2 =====");
-					disp_matrix(&img_dist,height,width);
+					disp_matrix(img_dist,height+2,width+2);
+					/*********************************/
 
+					/*********************************/
+					/*        SQUELETTISATION        */
+					/*********************************/
 					// Déclaration et allocation en mémoire de img_label_matrix
 					t_pixel **img_label_matrix;
-					alloc_label_matrix(&img_label_matrix,height,width);
+					alloc_label_matrix(&img_label_matrix,height+2,width+2);
 
 					// Déclaration et initialisation de img_label_list
 					t_plist img_label_list;
@@ -113,15 +127,20 @@ int main(void){
 
 					// Squelettisation
 					puts("===== SQUELETTISATION ====="); 
-					skelet(img_dist, img_label_matrix, &img_label_list, height,width);
+					skelet(img_dist, img_label_matrix, &img_label_list, height+2,width+2);
 
+					/*********************************/
+
+					/*********************************/
+					/*        DOUGLAS-PEUCKER        */
+					/*********************************/					
 					// Déclaration et allocation en mémoire de img_point_matrix
 					t_point ** img_point_matrix;
-					alloc_point_matrix(&img_point_matrix,height,width);
+					alloc_point_matrix(&img_point_matrix,height+2,width+2);
 					// Douglas-Peucker
 					puts("===== MATRICE POINT =====");
 					printf("Po = Point\nBo = Borne\nNo = Noeud\nBi = Bifurcation\n");
-					set_point_matrix(img_point_matrix,img_label_matrix,height,width);
+					set_point_matrix(img_point_matrix,img_label_matrix,height+2,width+2);
 				}
 				else
 				{

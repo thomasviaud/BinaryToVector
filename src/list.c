@@ -69,10 +69,12 @@ t_plist end_list(t_plist list){
 //
 void print_list(t_plist list){
 	int cpt=0;
-	while(list!=NULL){
-		print_pixel_list(head_list(list));
+	t_plist copy;
+	copy=list;
+	while(copy!=NULL){
+		print_pixel_list(head_list(copy));
 		printf("\t");
-		list=end_list(list);        
+		copy=end_list(copy);        
 		cpt++;
 		// Retour à la ligne
 		if(cpt==10){

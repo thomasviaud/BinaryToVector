@@ -16,7 +16,7 @@ all: Executable
 obj/bmp_reader.o: src/bmp_reader.c inc/bmp_reader.h 
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
-obj/pass.o: src/pass.c inc/pass.h 
+obj/pass.o: src/pass.c inc/pass.h inc/pixel.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 obj/list.o: src/list.c inc/list.h
@@ -25,17 +25,20 @@ obj/list.o: src/list.c inc/list.h
 obj/pixel.o: src/pixel.c inc/pixel.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
-obj/main.o: src/main.c inc/bmp_reader.h inc/pass.h inc/point.h
+obj/main.o: src/main.c inc/bmp_reader.h inc/pass.h inc/point.h 
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 obj/skel.o: src/skel.c inc/skel.h inc/list.h inc/pixel.h
+	$(CC) -o $@ -c $< $(CCFLAGS)
+
+obj/matrix.o: src/matrix.c inc/pixel.h inc/matrix.h 
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 obj/point.o: src/point.c inc/point.h inc/pixel.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 #Création de l'exécutable
-Executable: obj/main.o obj/bmp_reader.o obj/pass.o obj/skel.o obj/list.o obj/pixel.o obj/point.o
+Executable: obj/main.o obj/bmp_reader.o  obj/pass.o obj/skel.o obj/list.o obj/pixel.o obj/matrix.o obj/point.o
 	$(CC) -o $(BINDIR)/$@ $^ $(CCFLAGS)
 
 # Nettoyage des objets => Tout sera recompilé !

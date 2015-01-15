@@ -11,19 +11,9 @@
 #define N1 4
 #define N2 8
 #include "../inc/pixel.h"
+#include "../inc/matrix.h"
 #include "../inc/list.h"
 
-
-void alloc_label_matrix(t_pixel ***pA, uint32_t nl, uint32_t nc){
-    int i;
-    *pA = (t_pixel **)malloc(nl * sizeof(t_pixel *)) ;
-    for (i=0; i<nl; i++)
-    {
-        (*pA)[i] = (t_pixel *)malloc(nc * sizeof(t_pixel)) ;
-    }
-
-
-}
 //
 // set_border
 // Prend en argument une matrice, ainsi que la paire de coordonnées d'une case
@@ -106,6 +96,16 @@ char set_mult(uint8_t **dist, uint32_t l, uint32_t c){
 	}
 }
 //
+// set_squel
+// Prend en argument une matrice, ainsi que la paire de coordonnées d'une case
+// de celle-ci
+// Retourne 2 si le pixel est un pixel du squelette, 1 sinon.
+//
+char set_squel(t_pixel **pix, uint32_t l, uint32_t c){
+	if(pix[l][c].obj.mult==2) return 2;
+	return 1;
+}
+//
 // print_pixel
 // Prend en argument un pixel dans un tableau de pixel
 // et l'affiche dans la console sous le format TYPE CONTOUR MULTIPLE
@@ -160,8 +160,8 @@ void print_pixel_list(t_pixel pix){
 //
 void disp_matrix_label(t_pixel **img_label_matrix, uint32_t nl, uint32_t nc){
 	int i,j;
-	for(i=0;i<nl;i++){
-		for(j=0;j<nc;j++){
+	for(i=1;i<nl-1;i++){
+		for(j=1;j<nc-1;j++){
 			print_pixel(img_label_matrix,i,j);
 		}							
 		(void)printf("\n\n");
