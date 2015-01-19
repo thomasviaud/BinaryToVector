@@ -41,7 +41,7 @@ void dup_matrix(uint8_t ** A, uint8_t **A_copy, uint32_t nl, uint32_t nc){
 	for(i=0;i<nl;i++) memcpy(&(A_copy[i][0]), &(A[i][0]), nl * sizeof(uint8_t));
 }
 void dup_matrix_wborders(uint8_t ** A, uint8_t **A_copy, uint32_t nl, uint32_t nc){
-	int i;
+	int i,j;
 	// Initialisation de la matrice A_copy
 	// Colonnes
 	for(i=0;i<nl+2;i++){
@@ -49,10 +49,16 @@ void dup_matrix_wborders(uint8_t ** A, uint8_t **A_copy, uint32_t nl, uint32_t n
 		A_copy[i][nc+1]=0;
 	}
 	// Lignes
-	for(i=1;i<nc+1;i++){
+	for(i=1;i<nc+2;i++){
 		A_copy[0][i]=0;
 		A_copy[nl+1][i]=0;
 	}
 	// Partie interne de la matrice
-	for(i=0;i<nl;i++) memcpy(&(A_copy[i+1][1]), &(A[i][0]), (nl+2) * sizeof(uint8_t));
+	for(i=1;i<nl+1;i++){
+		for(j=1;j<nc+1;j++){
+			A_copy[i][j]=A[i-1][j-1];
+		}
+	}
 }
+
+//	} memcpy(&(A_copy[i+1][1]), &(A[i][0]), (nl+2) * sizeof(uint8_t)); ??
