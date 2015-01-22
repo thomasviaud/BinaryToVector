@@ -13,6 +13,8 @@
 #include "../inc/list.h"
 #include "../inc/skel.h"
 #include "../inc/point.h"
+#include "../inc/arbre.h"
+#include "../inc/douglas.h"
 #define NAMESIZE 255
 
 int main(void){
@@ -141,6 +143,25 @@ int main(void){
 					puts("===== MATRICE POINT =====");
 					printf("Po = Point\nBo = Borne\nNo = Noeud\nBi = Bifurcation\n");
 					set_point_matrix(img_point_matrix,img_label_matrix,height+2,width+2);
+					// test arbre
+					// Déclaration de l'arbre des points
+					t_parbre img_point_tree=NULL;
+					t_parbre debut=NULL;
+					
+					// Cas facile
+					img_point_tree=(t_parbre)malloc(sizeof(t_noeud));
+				/*	debut=img_point_tree;
+					img_point_tree->val=3;
+					img_point_tree->father=NULL;
+					t_point a,b,c;
+					a.type=1;
+					b.type=2;
+					c.type=3;
+					add_son(a,img_point_tree,1,1,1);
+					add_son(b,img_point_tree,1,2,2);	*/
+					// Création de l'arbre contenant les points remarquables
+					img_point_tree=set_tree(img_point_tree,img_point_matrix,height+2,width+2);
+					print_tree(img_point_tree);
 				}
 				else
 				{

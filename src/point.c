@@ -22,7 +22,8 @@ void set_point_matrix(t_point ** img_point_matrix, t_pixel ** img_label_matrix, 
 	// Partie interne de la matrice
 	for(i=0;i<nl;i++){
 		for(j=0;j<nc;j++){
-			img_point_matrix[i][j]=set_point(img_label_matrix,i,j);
+			img_point_matrix[i][j].type=set_point(img_label_matrix,i,j);
+			img_point_matrix[i][j].is_done=0;
 		}
 	}
 	disp_point_matrix(img_point_matrix,nl,nc);
@@ -74,11 +75,11 @@ char set_point(t_pixel ** img_label_matrix, uint32_t l, uint32_t c){
 	return 0;
 }
 void print_point(t_point ** point, uint32_t l, uint32_t c){
-	if(point[l][c]==1) (void)printf("Bo  ");
-	else if(point[l][c]==2) (void)printf("No  ");
-	else if(point[l][c]==3) (void)printf("Bi  ");
-	else if(point[l][c]==0) (void)printf("Po  ");
-	else if(point[l][c]==4)(void)printf("    ");
+	if(point[l][c].type==1) (void)printf("Bo  ");
+	else if(point[l][c].type==2) (void)printf("No  ");
+	else if(point[l][c].type==3) (void)printf("Bi  ");
+	else if(point[l][c].type==0) (void)printf("Po  ");
+	else if(point[l][c].type==4) (void)printf("--  ");
 }
 
 void disp_point_matrix(t_point ** point, uint32_t nl, uint32_t nc){
