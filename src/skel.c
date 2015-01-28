@@ -12,6 +12,7 @@
 #include "../inc/matrix.h"
 #include "../inc/list.h"
 #include "../inc/skel.h"
+
 //
 // skelet
 // Prend en argument la matrice de transformée en distance,
@@ -41,6 +42,7 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_l
 	printf("===== SQUELETTE =====\n");
 	disp_skel(img_label_matrix, nl, nc);
 }
+
 //
 // build_img_label
 // Prend en argument la matrice de transformée en distance,

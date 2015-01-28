@@ -1,7 +1,8 @@
 #ifndef __POINT_H__
 #define __POINT_H__
+
 typedef struct{
-	char type; // 0 : Point 	1 : Borne 	2 : Noeud 	3 : Bifurcation
+	char type; // 0 : Point 	1 : Borne 	2 : Noeud 	3 : Bifurcation	4 : Fond
 	char is_done; // 0 : !done 	1 : done
 }t_point;
 
