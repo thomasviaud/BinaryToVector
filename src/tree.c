@@ -32,15 +32,15 @@ pnoeud next_node(pnoeud node, int nson){
 
 void print_tree(pnoeud node){
 	//printf(" %d ",node->point.type);
-	printf("[%d][%d]",node->posx,node->posy);
-	printf("( ");
+	printf("%d",node->point.type);
+	printf("(");
 	if(node->son1!=NULL) print_tree(next_node(node,1));
 	printf(" ");
 	if(node->son2!=NULL) print_tree(next_node(node,2));
 	if(node->son3!=NULL) print_tree(next_node(node,3));
 	printf(" ");
 	if(node->son4!=NULL) print_tree(next_node(node,4));
-	printf(" )");
+	printf(")");
 	return;
 }
 

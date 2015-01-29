@@ -10,37 +10,55 @@
 #include "../inc/point.h"
 #include "../inc/tree.h"
 #include "../inc/douglas.h"
+#include "../inc/interface.h"
+
 #define NAMESIZE 255
 
 int main(){
-	int mode;
 
-	// Saisie du mode et du nom de l'image
-	do{
 	system("clear");
-	printf("=====================================================\n");
-	printf("|                VECTORISATION D'IMAGE              |\n");
-	printf("|        Projet Algorithmique et Programmation      |\n");
-	printf("|        HOAREAU Jordan           VIAUD Thomas      |\n");
-	printf("|                   IRM 3A 2014/2015                |\n");
-	printf("=====================================================\n");
-	puts("---------Menu---------\n");
-	puts("|                    |\n");
-	puts("| 1- Pas à pas       |\n");
-	puts("| 2- Démonstration   |\n");
-	puts("|                    |\n");
-	puts("----------------------\n");
-	scanf("%d",&mode);
-	}while(mode < 1 && mode >2);
+	puts("=====================================================");
+	puts("|                VECTORISATION D'IMAGE              |");
+	puts("|        Projet Algorithmique et Programmation      |");
+	puts("|        HOAREAU Jordan           VIAUD Thomas      |");
+	puts("|                   IRM 3A 2014/2015                |");
+	puts("=====================================================");
 
-	puts("\n\nEntrez le nom de l'image souhaitée stockée dans le dossier img sous le format .bmp : ");
-	char *nom_img;
-	nom_img=(char*)malloc(NAMESIZE*sizeof(char));
-	scanf("%s",nom_img);
-	char path[]="./img/";
-	char format[]=".bmp";
-	strcat(path,nom_img);
-	strcat(path,format);
+	char path[30];
+
+	switch(displayMenu())
+	{
+	case 1:
+
+		printf("Image au format .bmp : ");
+		char *nom_img;
+		nom_img=(char*)malloc(NAMESIZE*sizeof(char));
+		scanf("%s",nom_img);
+		strcpy(path,"./img/");
+		char format[]=".bmp";
+		strcat(path,nom_img);
+		strcat(path,format);
+		break;
+
+	case 2 :
+		strcpy(path,"./img/tamere.bmp");
+		break;
+
+	case 3 :
+		strcpy(path,"./img/tamere.bmp");
+		break;
+
+	case 4 :
+		strcpy(path,"./img/tamere.bmp");
+		break;
+
+	default :
+		return 0;
+	}
+
+	int step= 0;
+	printf("Step by step ? (Oui : 1) ");
+	scanf("%d",&step);
 
 	FILE * fBMP = fopen(path,"rb+");
 	if (fBMP != NULL)
@@ -95,9 +113,10 @@ int main(){
 					printf("===================================\n");
 					printf("===== TRANSFORMEE EN DISTANCE =====\n");
 					printf("===================================\n");
+					if(step==1) getchar();
 					puts("===== MATRICE BINAIRE =====");
 					disp_matrix(img_bin,height,width);
-
+					if(step==1) getchar();
 					// Déclaration img_bin_borders et duplication
 					uint8_t **img_bin_borders;
 					alloc_matrix(&img_bin_borders,height+2,width+2);
@@ -110,6 +129,7 @@ int main(){
 
 					puts("===== MATRICE BINAIRE COPIEE =====");
 					disp_matrix(img_bin_borders,height+2,width+2);
+					if(step==1) getchar();
 					/*********************************/
 					/*    TRANSFORMEE EN DISTANCE    */
 					/*********************************/
@@ -117,12 +137,12 @@ int main(){
 					first_pass(img_bin_borders, img_dist, height, width);
 					puts("===== MATRICE PASSE 1 =====");
 					disp_matrix(img_dist,height+2,width+2);
-
+					if(step==1) getchar();
 					// Seconde passe
 					last_pass(img_bin_borders, img_dist, height, width);
 					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(img_dist,height+2,width+2);
-					if(mode==1) getchar();
+					if(step==1) getchar();
 					/*********************************/
 
 					/*********************************/
@@ -142,6 +162,7 @@ int main(){
 					// Squelettisation
 					puts("===== CREATION DU SQUELETTE ====="); 
 					skelet(img_dist, img_label_matrix, &img_label_list, height+2,width+2);
+					if(step==1) getchar();
 
 					/*********************************/
 

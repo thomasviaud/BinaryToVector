@@ -31,7 +31,9 @@ plarbre douglas(t_point** img_point, uint32_t nl, uint32_t nc){
 // Retourne un noeud d'arbre
 //
 void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
-	printf("Position [%d][%d]\n",l,c);
+	printf("Je suis en [%d][%d]\n",l,c);
+	// Mise à jour du statut du point courant
+	point[l][c].is_done=1;
 	// Variable qui contient l'arbre retourné par la fonction
 	pnoeud n_node;
 
@@ -49,7 +51,7 @@ void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
 	// Remplissage du tableau de voisins en connexité 8
 	for(i=0;i<2*N;i+=2){
 		if(point[l+coord[i]][c+coord[i+1]].type!=4 && point[l+coord[i]][c+coord[i+1]].is_done==0){
-			
+
 			voisins[i/2]=1;
 			cpt++;
 		}
@@ -62,19 +64,20 @@ void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
 		}
 	}
 
+
 	// Condition d'arrêt : le pixel n'a pas de voisins non lus ni de l'image
 	if(!cpt){
 		tree->point=point[l][c];
 		tree->posx=l;
 		tree->posy=c;
+		printf("Je suis une Borne. STOP\n");
 		return;
 	} 
 
-	// Mise à jour du statut du point courant
-	point[l][c].is_done=1;
+
 	// Ajout du pixel courant s'il est du bon type (1 ou 3) dans l'arbre	
 	if((point[l][c].type)%2==1){
-	printf("Type Borne/Bifurcation\n");		
+	printf("Le pixel est de type Borne/Bifurcation\n");		
 		if(point[l][c].type==3){
 			tree->posx=l;
 			tree->posy=c;
@@ -88,18 +91,19 @@ void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
 				n_node=set_node(point,l,c);
 				parcours_img(n_node,point,l+coord[i],c+coord[i+1]);
 				// Lien entre n_node et tree
-				printf("\n");
 				set_son(tree,n_node,n);
 				n++;
 			}
 		}
 	// Le pixel est de type Point ou Noeud : on avance quand même
 	}else{
-		printf("Type Point/Noeud\n");
+		printf("Le pixel est de type Point\n");
 		// Appel récursif pour chaque voisin non lu
 		for(i=0;i<2*N;i+=2){
 			if(voisins[i/2]==1){
 				parcours_img(tree,point,l+coord[i],c+coord[i+1]);
+				break;
+
 			}
 		}
 
