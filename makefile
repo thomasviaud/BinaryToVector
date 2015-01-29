@@ -34,11 +34,17 @@ obj/skel.o: src/skel.c inc/skel.h inc/list.h inc/pixel.h
 obj/matrix.o: src/matrix.c inc/pixel.h inc/matrix.h 
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
-obj/point.o: src/point.c inc/point.h inc/pixel.h
+obj/douglas.o: src/douglas.c inc/douglas.h inc/pixel.h inc/point.h inc/tree.h
+	$(CC) -o $@ -c $< $(CCFLAGS)
+
+obj/point.o: src/point.c inc/pixel.h inc/point.h
+	$(CC) -o $@ -c $< $(CCFLAGS)
+
+obj/tree.o: src/tree.c inc/tree.h inc/point.h inc/pixel.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 #Création de l'exécutable
-Executable: obj/main.o obj/bmp_reader.o  obj/pass.o obj/skel.o obj/list.o obj/pixel.o obj/matrix.o obj/point.o
+Executable: obj/main.o obj/bmp_reader.o  obj/pass.o obj/skel.o obj/list.o obj/pixel.o obj/matrix.o obj/point.o obj/douglas.o obj/tree.o
 	$(CC) -o $(BINDIR)/$@ $^ $(CCFLAGS)
 
 # Nettoyage des objets => Tout sera recompilé !

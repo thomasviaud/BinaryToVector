@@ -8,12 +8,15 @@
 #include "../inc/list.h"
 #include "../inc/skel.h"
 #include "../inc/point.h"
-#include "../inc/graph.h"
+#include "../inc/tree.h"
 #include "../inc/douglas.h"
 #define NAMESIZE 255
 
 int main(){
-	
+	int mode;
+
+	// Saisie du mode et du nom de l'image
+	do{
 	system("clear");
 	printf("=====================================================\n");
 	printf("|                VECTORISATION D'IMAGE              |\n");
@@ -21,8 +24,15 @@ int main(){
 	printf("|        HOAREAU Jordan           VIAUD Thomas      |\n");
 	printf("|                   IRM 3A 2014/2015                |\n");
 	printf("=====================================================\n");
+	puts("---------Menu---------\n");
+	puts("|                    |\n");
+	puts("| 1- Pas à pas       |\n");
+	puts("| 2- Démonstration   |\n");
+	puts("|                    |\n");
+	puts("----------------------\n");
+	scanf("%d",&mode);
+	}while(mode < 1 && mode >2);
 
-	// Saisie du nom de l'image
 	puts("\n\nEntrez le nom de l'image souhaitée stockée dans le dossier img sous le format .bmp : ");
 	char *nom_img;
 	nom_img=(char*)malloc(NAMESIZE*sizeof(char));
@@ -82,6 +92,9 @@ int main(){
                     }
 
 					// Affichage matrice img_bin
+					printf("===================================\n");
+					printf("===== TRANSFORMEE EN DISTANCE =====\n");
+					printf("===================================\n");
 					puts("===== MATRICE BINAIRE =====");
 					disp_matrix(img_bin,height,width);
 
@@ -109,11 +122,15 @@ int main(){
 					last_pass(img_bin_borders, img_dist, height, width);
 					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(img_dist,height+2,width+2);
+					if(mode==1) getchar();
 					/*********************************/
 
 					/*********************************/
 					/*        SQUELETTISATION        */
 					/*********************************/
+					printf("===================================\n");
+					printf("========= SQUELETTISATION =========\n");
+					printf("===================================\n");
 					// Déclaration et allocation en mémoire de img_label_matrix
 					t_pixel **img_label_matrix;
 					alloc_label_matrix(&img_label_matrix,height+2,width+2);
@@ -123,7 +140,7 @@ int main(){
 					img_label_list=create_void();
 
 					// Squelettisation
-					puts("===== SQUELETTISATION ====="); 
+					puts("===== CREATION DU SQUELETTE ====="); 
 					skelet(img_dist, img_label_matrix, &img_label_list, height+2,width+2);
 
 					/*********************************/
@@ -138,10 +155,51 @@ int main(){
 					puts("===== MATRICE POINT =====");
 					printf("Po = Point\nBo = Borne\nNo = Noeud\nBi = Bifurcation\n");
 					set_point_matrix(img_point_matrix,img_label_matrix,height+2,width+2);
-					// Test graphe
-					t_graph* img_graph;
-					img_graph=douglas(img_point_matrix,height+2,width+2);
-					print_ledge(img_graph->edges->next);
+					plarbre img_tree_list;
+					img_tree_list=init_ltree();
+					img_tree_list=douglas(img_point_matrix,height+2,width+2);
+					print_larbre(img_tree_list);
+					/*
+					// Test arbres
+					plarbre larbre;
+					larbre=init_ltree();
+					// Création arbre 1
+					pnoeud img_tree, img_tree2, son1, son2, son21,son3,son4;
+					img_tree=set_node(img_point_matrix,0,0);
+					son1=set_node(img_point_matrix,3,2);
+					son2=set_node(img_point_matrix,6,6);
+					son21=set_node(img_point_matrix,3,6);
+					son1->leaf=1;
+					son21->leaf=1;
+					printf("Premier noeud : %d\n",img_tree->point.type);
+					set_son(img_tree,son1,1);
+					set_son(img_tree,son2,2);
+					set_son(img_tree->son2,son21,1);
+					printf("Fils 1 : %d \n",img_tree->son1->point.type);
+					printf("Fils 2 : %d\n",img_tree->son2->point.type);
+					print_tree(img_tree);
+					// Ajout arbre 1 dans liste
+					printf("\n");
+					larbre=add_tree(larbre,img_tree);
+
+					// Création arbre 2
+					img_tree2=set_node(img_point_matrix,0,0);
+					son3=set_node(img_point_matrix,6,6);
+					son4=set_node(img_point_matrix,3,6);
+					son4->leaf=1;
+					printf("h");
+					printf("Premier noeud : %d\n",img_tree2->point.type);
+					set_son(img_tree2,son3,1);
+					set_son(img_tree2->son1,son4,1);
+					printf("Fils 1 : %d \n",img_tree2->son1->point.type);
+					printf("Fils 11 : %d\n",img_tree2->son1->son1->point.type);
+					print_tree(img_tree2);
+					// Ajout dans liste
+					larbre=add_tree(larbre,img_tree2);
+					printf("\n");
+					print_larbre(larbre);*/
+
+					
 					
 				}
 				else
