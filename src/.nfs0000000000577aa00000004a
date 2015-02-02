@@ -1,31 +1,3 @@
-/** 
- *
- * Polytech Marseille
- * Case 925 - 163, avenue de Luminy
- * 13288 Marseille CEDEX 9
- *
- * Ce fichier est l'oeuvre d'eleves de Polytech Marseille. Il ne peut etre
- * reproduit, utilise ou modifie sans l'avis express de ses auteurs.
- */ 
-
-/**
- * @author VIAUD Thomas <thomas.viaud@etu.univ-amu.fr>
- * @author HOAREAU Jordan <jordan.hoareau@etu.univ-amu.fr>
- *
- * @version 1.0.0 / 02-02-2015
- * @todo Implementer Douglas-Peucker
- * @bug 
- */
-
-
-/**
- * @file main.c
- * @brief Vectorisation d'images binaires
- *
- * Lis une image bmp binaire, en extrait un squelette et 
- * rend un pdf vectoriel de cette image vectorisée.
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -138,11 +110,11 @@ int main(){
                     }
 
 					// Affichage matrice img_bin
-					puts("=====================================================");
-					puts("|               TRANSFORMEE EN DISTANCE             |");
-					puts("=====================================================");
+					printf("===================================\n");
+					printf("===== TRANSFORMEE EN DISTANCE =====\n");
+					printf("===================================\n");
 					if(step==1) getchar();
-					puts("================== MATRICE BINAIRE ==================\n");
+					puts("===== MATRICE BINAIRE =====");
 					disp_matrix(img_bin,height,width);
 					if(step==1) getchar();
 					// Déclaration img_bin_borders et duplication
@@ -155,26 +127,30 @@ int main(){
 					alloc_matrix(&img_dist,height+2,width+2);
 					dup_matrix(img_bin_borders,img_dist,height+2,width+2);
 
-					puts("============= MATRICE BINAIRE COPIEE ==============\n");
+					puts("===== MATRICE BINAIRE COPIEE =====");
 					disp_matrix(img_bin_borders,height+2,width+2);
 					if(step==1) getchar();
-
-					// PREMIERE PASSE
+					/*********************************/
+					/*    TRANSFORMEE EN DISTANCE    */
+					/*********************************/
+					// Première passe
 					first_pass(img_bin_borders, img_dist, height, width);
-					puts("================= MATRICE PASSE 1 =================\n");
+					puts("===== MATRICE PASSE 1 =====");
 					disp_matrix(img_dist,height+2,width+2);
 					if(step==1) getchar();
-					// SECONDE PASSE
+					// Seconde passe
 					last_pass(img_bin_borders, img_dist, height, width);
-					puts("================= MATRICE PASSE 2 =================\n");
+					puts("===== MATRICE PASSE 2 =====");
 					disp_matrix(img_dist,height+2,width+2);
 					if(step==1) getchar();
+					/*********************************/
 
-
-					puts("=====================================================");
-					puts("|                   SQUELETTISATION                  |");
-					puts("=====================================================");
-					if(step==1) getchar();
+					/*********************************/
+					/*        SQUELETTISATION        */
+					/*********************************/
+					printf("===================================\n");
+					printf("========= SQUELETTISATION =========\n");
+					printf("===================================\n");
 					// Déclaration et allocation en mémoire de img_label_matrix
 					t_pixel **img_label_matrix;
 					alloc_label_matrix(&img_label_matrix,height+2,width+2);
@@ -184,18 +160,20 @@ int main(){
 					img_label_list=create_void();
 
 					// Squelettisation
-					puts("================ CREATION DU SQUELETTE ==============\n"); 
+					puts("===== CREATION DU SQUELETTE ====="); 
 					skelet(img_dist, img_label_matrix, &img_label_list, height+2,width+2);
 					if(step==1) getchar();
 
-					puts("=====================================================");
-					puts("|                   DOUGLAS-PEUCKER                  |");
-					puts("=====================================================");			
+					/*********************************/
+
+					/*********************************/
+					/*        DOUGLAS-PEUCKER        */
+					/*********************************/					
 					// Déclaration et allocation en mémoire de img_point_matrix
 					t_point ** img_point_matrix;
 					alloc_point_matrix(&img_point_matrix,height+2,width+2);
 					// Douglas-Peucker
-					puts("==================== MATRICE POINT ==================\n");
+					puts("===== MATRICE POINT =====");
 					printf("Po = Point\nBo = Borne\nNo = Noeud\nBi = Bifurcation\n");
 					set_point_matrix(img_point_matrix,img_label_matrix,height+2,width+2);
 					plarbre img_tree_list;

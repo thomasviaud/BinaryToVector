@@ -31,7 +31,7 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_l
 		cpt_mult=0;
 		cpt_border=0;
 		build_img_label(img_dist,img_label_matrix, nl, nc);
-		printf("===== CONTOUR %d =====\n\n",etape);
+		printf("================= CONTOUR %d =================\n\n",etape);
 		disp_matrix_label(img_label_matrix,nl,nc);
 		build_img_list(img_label_matrix, img_label_list,nl,nc);
 		mult_border=skelet_condition(cpt_border,cpt_mult,list_copy,img_label_list);
@@ -39,7 +39,7 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_l
 		etape++;
 		disp_skel(img_label_matrix, nl, nc);
 	}while(mult_border);
-	printf("===== SQUELETTE =====\n");
+	printf("================== SQUELETTE ==================\n");
 	disp_skel(img_label_matrix, nl, nc);
 }
 
