@@ -39,6 +39,8 @@
 #include "../inc/tree.h"
 #include "../inc/douglas.h"
 #include "../inc/interface.h"
+ #include "../inc/latex.h"
+
 
 #define NAMESIZE 255
 
@@ -84,14 +86,11 @@ int main(){
 		return 0;
 	}
 
-	int step= 0;
-	printf("Step by step ? (Oui : 1) ");
-	scanf("%d",&step);
-
 	FILE * fBMP = fopen(path,"rb+");
 	if (fBMP != NULL)
 	{
 		puts("File opened.\n");
+
 
 		BmpWorker_fileHeader * fileHeader = (BmpWorker_fileHeader *) malloc(
 			sizeof(BmpWorker_fileHeader));
@@ -137,12 +136,19 @@ int main(){
                         return ERROR_INVALID_DATA;
                     }
 
+                    // Mode step by step
+                    int step= 0;
+					printf("Step by step ? (Oui : 1) ");
+					scanf("%d",&step);
+
 					// Affichage matrice img_bin
 					puts("=====================================================");
 					puts("|               TRANSFORMEE EN DISTANCE             |");
 					puts("=====================================================");
 					if(step==1) getchar();
+					if(step==1) getchar();
 					puts("================== MATRICE BINAIRE ==================\n");
+					if(step==1) getchar();
 					disp_matrix(img_bin,height,width);
 					if(step==1) getchar();
 					// Déclaration img_bin_borders et duplication
@@ -155,18 +161,25 @@ int main(){
 					alloc_matrix(&img_dist,height+2,width+2);
 					dup_matrix(img_bin_borders,img_dist,height+2,width+2);
 
+
 					puts("============= MATRICE BINAIRE COPIEE ==============\n");
+					if(step==1) getchar();
 					disp_matrix(img_bin_borders,height+2,width+2);
 					if(step==1) getchar();
 
 					// PREMIERE PASSE
 					first_pass(img_bin_borders, img_dist, height, width);
+
 					puts("================= MATRICE PASSE 1 =================\n");
+					if(step==1) getchar();
 					disp_matrix(img_dist,height+2,width+2);
 					if(step==1) getchar();
+
 					// SECONDE PASSE
 					last_pass(img_bin_borders, img_dist, height, width);
+
 					puts("================= MATRICE PASSE 2 =================\n");
+					if(step==1) getchar();
 					disp_matrix(img_dist,height+2,width+2);
 					if(step==1) getchar();
 
@@ -174,7 +187,6 @@ int main(){
 					puts("=====================================================");
 					puts("|                   SQUELETTISATION                  |");
 					puts("=====================================================");
-					if(step==1) getchar();
 					// Déclaration et allocation en mémoire de img_label_matrix
 					t_pixel **img_label_matrix;
 					alloc_label_matrix(&img_label_matrix,height+2,width+2);
@@ -185,8 +197,9 @@ int main(){
 
 					// Squelettisation
 					puts("================ CREATION DU SQUELETTE ==============\n"); 
-					skelet(img_dist, img_label_matrix, &img_label_list, height+2,width+2);
 					if(step==1) getchar();
+					skelet(img_dist, img_label_matrix, &img_label_list, height+2,width+2, step);
+
 
 					puts("=====================================================");
 					puts("|                   DOUGLAS-PEUCKER                  |");
@@ -202,48 +215,9 @@ int main(){
 					img_tree_list=init_ltree();
 					img_tree_list=douglas(img_point_matrix,height+2,width+2);
 					print_larbre(img_tree_list);
-					/*
-					// Test arbres
-					plarbre larbre;
-					larbre=init_ltree();
-					// Création arbre 1
-					pnoeud img_tree, img_tree2, son1, son2, son21,son3,son4;
-					img_tree=set_node(img_point_matrix,0,0);
-					son1=set_node(img_point_matrix,3,2);
-					son2=set_node(img_point_matrix,6,6);
-					son21=set_node(img_point_matrix,3,6);
-					son1->leaf=1;
-					son21->leaf=1;
-					printf("Premier noeud : %d\n",img_tree->point.type);
-					set_son(img_tree,son1,1);
-					set_son(img_tree,son2,2);
-					set_son(img_tree->son2,son21,1);
-					printf("Fils 1 : %d \n",img_tree->son1->point.type);
-					printf("Fils 2 : %d\n",img_tree->son2->point.type);
-					print_tree(img_tree);
-					// Ajout arbre 1 dans liste
-					printf("\n");
-					larbre=add_tree(larbre,img_tree);
 
-					// Création arbre 2
-					img_tree2=set_node(img_point_matrix,0,0);
-					son3=set_node(img_point_matrix,6,6);
-					son4=set_node(img_point_matrix,3,6);
-					son4->leaf=1;
-					printf("h");
-					printf("Premier noeud : %d\n",img_tree2->point.type);
-					set_son(img_tree2,son3,1);
-					set_son(img_tree2->son1,son4,1);
-					printf("Fils 1 : %d \n",img_tree2->son1->point.type);
-					printf("Fils 11 : %d\n",img_tree2->son1->son1->point.type);
-					print_tree(img_tree2);
-					// Ajout dans liste
-					larbre=add_tree(larbre,img_tree2);
-					printf("\n");
-					print_larbre(larbre);*/
-
-					
-					
+					FILE* file = NULL;
+					print_latex(img_tree_list, file, height, width);
 				}
 				else
 				{

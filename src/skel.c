@@ -20,26 +20,29 @@
 // contenant les labels.
 // Ne renvoi rien
 //
-void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc){
+void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc, int step){
 	t_plist list_copy;
 	int cpt_mult, cpt_border;
 	int mult_border;
 	int etape=1;
+
 	do{
 		(*img_label_list)=NULL;
 		list_copy=NULL;		
 		cpt_mult=0;
 		cpt_border=0;
 		build_img_label(img_dist,img_label_matrix, nl, nc);
-		printf("================= CONTOUR %d =================\n\n",etape);
+
+		printf("================= CONTOUR %d =================\n",etape);
 		disp_matrix_label(img_label_matrix,nl,nc);
 		build_img_list(img_label_matrix, img_label_list,nl,nc);
 		mult_border=skelet_condition(cpt_border,cpt_mult,list_copy,img_label_list);
 		delete_current_border(img_dist, nl, nc);
 		etape++;
 		disp_skel(img_label_matrix, nl, nc);
+		if(step==1) getchar();
 	}while(mult_border);
-	printf("================== SQUELETTE ==================\n");
+	puts("================== SQUELETTE ==================");
 	disp_skel(img_label_matrix, nl, nc);
 }
 

@@ -46,8 +46,11 @@ obj/tree.o: src/tree.c inc/tree.h inc/point.h inc/pixel.h
 obj/interface.o: src/interface.c inc/interface.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
+obj/latex.o: src/latex.c inc/latex.h inc/tree.h
+	$(CC) -o $@ -c $< $(CCFLAGS)
+
 #Création de l'exécutable
-Executable: obj/main.o obj/bmp_reader.o  obj/pass.o obj/skel.o obj/list.o obj/pixel.o obj/matrix.o obj/point.o obj/douglas.o obj/tree.o obj/interface.o
+Executable: obj/main.o obj/bmp_reader.o  obj/pass.o obj/skel.o obj/list.o obj/pixel.o obj/matrix.o obj/point.o obj/douglas.o obj/tree.o obj/interface.o obj/latex.o
 	$(CC) -o $(BINDIR)/$@ $^ $(CCFLAGS)
 
 # Nettoyage des objets => Tout sera recompilé !
