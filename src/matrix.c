@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include "../inc/pixel.h"
+
 #include "../inc/matrix.h"
 
 void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc){

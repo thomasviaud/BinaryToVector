@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include "../inc/pixel.h"
+
 #include "../inc/point.h"
 #define N 8
 #define N_coin 3
@@ -24,6 +21,7 @@ void set_point_matrix(t_point ** img_point_matrix, t_pixel ** img_label_matrix, 
 		for(j=0;j<nc;j++){
 			img_point_matrix[i][j].type=set_point(img_label_matrix,i,j);
 			img_point_matrix[i][j].is_done=0;
+			img_point_matrix[i][j].is_done_d=0;
 		}
 	}
 	disp_point_matrix(img_point_matrix,nl,nc);

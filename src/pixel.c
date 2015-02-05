@@ -4,12 +4,6 @@
 // pixel                                               	 //
 ///////////////////////////////////////////////////////////
 
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdlib.h>
-#define N1 4
-#define N2 8
 #include "../inc/pixel.h"
 #include "../inc/matrix.h"
 #include "../inc/list.h"

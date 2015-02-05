@@ -3,13 +3,6 @@
 // Contient les fonctions relatives à la gestion des     //
 // listes                                                //
 ///////////////////////////////////////////////////////////
-
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdlib.h>
-#include <assert.h>
-#include "../inc/pixel.h"
 #include "../inc/list.h"
 
 //

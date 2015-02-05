@@ -26,26 +26,14 @@
  * rend un pdf vectoriel de cette image vectorisée.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../inc/bmp_reader.h"
-#include "../inc/pass.h"
-#include "../inc/pixel.h"
-#include "../inc/matrix.h"
-#include "../inc/list.h"
-#include "../inc/skel.h"
-#include "../inc/point.h"
-#include "../inc/tree.h"
-#include "../inc/douglas.h"
-#include "../inc/interface.h"
- #include "../inc/latex.h"
+#include "../inc/main.h"
 
 
 #define NAMESIZE 255
 
 int main(){
 
+	char *nom_img;
 	system("clear");
 	puts("=====================================================");
 	puts("|                VECTORISATION D'IMAGE              |");
@@ -61,7 +49,6 @@ int main(){
 	case 1:
 
 		printf("Image au format .bmp : ");
-		char *nom_img;
 		nom_img=(char*)malloc(NAMESIZE*sizeof(char));
 		scanf("%s",nom_img);
 		strcpy(path,"./img/");
@@ -71,15 +58,15 @@ int main(){
 		break;
 
 	case 2 :
-		strcpy(path,"./img/tamere.bmp");
+		strcpy(path,"./img/full.bmp");
 		break;
 
 	case 3 :
-		strcpy(path,"./img/tamere.bmp");
+		strcpy(path,"./img/rond.bmp");
 		break;
 
 	case 4 :
-		strcpy(path,"./img/tamere.bmp");
+		strcpy(path,"./img/random.bmp");
 		break;
 
 	default :
@@ -211,13 +198,19 @@ int main(){
 					puts("==================== MATRICE POINT ==================\n");
 					printf("Po = Point\nBo = Borne\nNo = Noeud\nBi = Bifurcation\n");
 					set_point_matrix(img_point_matrix,img_label_matrix,height+2,width+2);
+
+					float seuil;
+					printf("Entrez le seuil epsilon : ");
+					scanf("%f",&seuil);
+
 					plarbre img_tree_list;
 					img_tree_list=init_ltree();
-					img_tree_list=douglas(img_point_matrix,height+2,width+2);
+					img_tree_list=douglas(img_point_matrix,height+2,width+2,seuil);
 					print_larbre(img_tree_list);
 
+
 					FILE* file = NULL;
-					print_latex(img_tree_list, file, height, width);
+					print_latex(img_tree_list, file, height, width,nom_img);
 				}
 				else
 				{

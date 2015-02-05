@@ -27,7 +27,7 @@ void parcours_tree_print(pnoeud tree, FILE* file) {
 	return;
 }
 
-void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
+void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width,char* name) {
  
     file = fopen("./bin/result.tex", "w");
  
@@ -58,5 +58,6 @@ void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
     }
     system("pdflatex ./bin/result.tex");
     system("evince --fullscreen result.pdf &");
+    fopen(name,"rb+");
     return;
 }

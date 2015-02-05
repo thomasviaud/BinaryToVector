@@ -3,14 +3,6 @@
 // Contient les fonctions relatives à la squelettisation //
 ///////////////////////////////////////////////////////////
 
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdlib.h>
-#include <assert.h>
-#include "../inc/pixel.h"
-#include "../inc/matrix.h"
-#include "../inc/list.h"
 #include "../inc/skel.h"
 
 //

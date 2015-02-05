@@ -5,9 +5,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../inc/tree.h"
+#include "tree.h"
 
 void 	parcours_tree_print		(pnoeud tree, FILE* file);
-void 	print_latex				(plarbre list, FILE* file, uint32_t height, uint32_t width);
+void 	print_latex				(plarbre list, FILE* file, uint32_t height, uint32_t width,char*name);
 
 #endif

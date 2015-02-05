@@ -3,9 +3,6 @@
 // Fonctions d'interface                                 //
 //                                                   	 //
 ///////////////////////////////////////////////////////////
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../inc/interface.h"
 
 int displayMenu(void)

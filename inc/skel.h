@@ -1,5 +1,13 @@
 #ifndef __SKEL_H__
 #define __SKEL_H__
+#include <stdio.h>
+#include <stdint.h>
+#include <math.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "pixel.h"
+#include "matrix.h"
+#include "list.h"
 void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist* img_label_list, uint32_t nl, uint32_t nc, int step);
 void build_img_label(uint8_t **img_dist, t_pixel **img_label_matrix, uint32_t nl, uint32_t nc);
 void build_img_list(t_pixel **img_label_matrix, t_plist *img_label_list, uint32_t nl, uint32_t nc);

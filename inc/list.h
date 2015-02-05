@@ -1,5 +1,12 @@
 #ifndef __LIST_H__
 #define __LIST_H__
+
+#include <stdio.h>
+#include <stdint.h>
+#include <math.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "pixel.h"
 typedef struct maillon{
     t_pixel v_pixel;
     struct maillon *next;

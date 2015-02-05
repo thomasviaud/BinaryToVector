@@ -1,6 +1,12 @@
 #ifndef __PIXEL_H__
 #define __PIXEL_H__
 
+#include <stdio.h>
+#include <stdint.h>
+#include <math.h>
+#include <stdlib.h>
+#define N1 4
+#define N2 8
 // Structure Objet
 // Partie décrivant le côté objet du pixel
 typedef struct{

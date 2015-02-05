@@ -1,9 +1,13 @@
 #ifndef __POINT_H__
 #define __POINT_H__
-
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include "pixel.h"
 typedef struct{
-	char type; // 0 : Point 	1 : Borne 	2 : Noeud 	3 : Bifurcation	4 : Fond
-	char is_done; // 0 : !done 	1 : done
+	char type; 		// 0 : Point 	1 : Borne 	2 : Noeud 	3 : Bifurcation	4 : Fond
+	char is_done; 	// 0 : !done 	1 : done
+	char is_done_d;	// 0 : !done 	1 : done
 }t_point;
 
 void alloc_point_matrix(t_point ***pA, uint32_t nl, uint32_t nc);

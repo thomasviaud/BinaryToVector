@@ -5,12 +5,6 @@
 // pour chaque pixel                                     //
 ///////////////////////////////////////////////////////////
 
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdlib.h>
-#include "../inc/pixel.h"
-#include "../inc/matrix.h"
 #include "../inc/pass.h"
 
 //

@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "../inc/pixel.h"
-#include "../inc/point.h"
+#include "pixel.h"
+#include "point.h"
 
 // Structures
 
@@ -15,6 +15,7 @@
 typedef struct mm{
 	char borne;
 	t_point point;
+	char feuille;
 	char posx;
 	char posy;
 	struct mm *son1;
