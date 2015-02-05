@@ -13,17 +13,17 @@ void parcours_tree_print(pnoeud tree, FILE* file) {
 
 	if(tree->son1 != NULL)
 	{
-		fprintf(file, "\\draw[black, line width=5mm] (%d,%d) -- (%d,%d);\n", tree->posx, tree->posy, tree->son1->posx, tree->son1->posy);
+		fprintf(file, "\\draw[black, line width=1mm] (%d,%d) -- (%d,%d);\n", tree->posx, tree->posy, tree->son1->posx, tree->son1->posy);
 		parcours_tree_print(tree->son1, file);
 	}
 	if(tree->son2 != NULL)
 	{
-		fprintf(file, "\\draw[black, line width=5mm] (%d,%d) -- (%d,%d);\n", tree->posx, tree->posy, tree->son2->posx, tree->son2->posy);
+		fprintf(file, "\\draw[black, line width=1mm] (%d,%d) -- (%d,%d);\n", tree->posx, tree->posy, tree->son2->posx, tree->son2->posy);
 		parcours_tree_print(tree->son2, file);
 	}
 	if(tree->son3 != NULL)
 	{
-		fprintf(file, "\\draw[black, line width=5mm] (%d,%d) -- (%d,%d);\n", tree->posx, tree->posy, tree->son3->posx, tree->son3->posy);
+		fprintf(file, "\\draw[black, line width=1mm] (%d,%d) -- (%d,%d);\n", tree->posx, tree->posy, tree->son3->posx, tree->son3->posy);
 		parcours_tree_print(tree->son3, file);
 	}
 	return;
@@ -35,7 +35,7 @@ void parcours_tree_print(pnoeud tree, FILE* file) {
 //
 void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
  
-    file = fopen("./bin/result.tex", "w");
+    file = fopen("./result.tex", "w");
  
     if (file != NULL)
     {
@@ -65,8 +65,7 @@ void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
 
         fclose(file);
     }
-    system("pdflatex ./bin/result.tex");
-    system("evince ./result.pdf &> /dev/null");
-    system("clear");
+    system("pdflatex ./result.tex");
+    system("evince --presentation ./result.pdf >> /dev/null &");
     return;
 }

@@ -28,3 +28,9 @@
 *.x86_64
 *.hex
 Executable
+
+# Divers
+*.aux
+*.log
+*.pdf
+*.tex
