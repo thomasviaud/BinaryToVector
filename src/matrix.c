@@ -1,6 +1,15 @@
+///////////////////////////////////////////////////////////
+// matrix.c                                              //
+// Contient les fonctions relatives aux 				 //
+// manipulations de matrices 							 //
+///////////////////////////////////////////////////////////
 
 #include "../inc/matrix.h"
 
+//
+// alloc_matrix
+// Alloue une matrice de uint8_t de taille nl*nc
+//
 void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc){
 	int i ;
 	*pA = (uint8_t **)malloc(nl * sizeof(uint8_t *)) ;
@@ -10,6 +19,10 @@ void alloc_matrix(uint8_t ***pA, uint32_t nl, uint32_t nc){
 	}
 }
 
+//
+// alloc_label_matrix
+// Alloue une matrice de t_pixel de taille nl*nc
+//
 void alloc_label_matrix(t_pixel ***pA, uint32_t nl, uint32_t nc){
     int i;
     *pA = (t_pixel **)malloc(nl * sizeof(t_pixel *)) ;
@@ -19,6 +32,23 @@ void alloc_label_matrix(t_pixel ***pA, uint32_t nl, uint32_t nc){
     }
 }
 
+//
+// alloc_point_matrix
+// Alloue une matrice de t_point de taille nl*nc
+//
+void alloc_point_matrix(t_point ***pA, uint32_t nl, uint32_t nc){
+	int i;
+    *pA = (t_point **)malloc(nl * sizeof(t_point *)) ;
+    for (i=0; i<nl; i++)
+    {
+        (*pA)[i] = (t_point *)malloc(nc * sizeof(t_point)) ;
+    }
+}
+
+//
+// disp_matrix
+// Affiche une matrice de uint8_t de taille nl*nc
+//
 void disp_matrix(uint8_t **pX, uint32_t nl, uint32_t nc){
 	int i,j;
 	for (i=0;i<nl;i++)
@@ -32,10 +62,20 @@ void disp_matrix(uint8_t **pX, uint32_t nl, uint32_t nc){
 	}
 	printf("\n");
 }
+
+//
+// dup_matrix
+// Duplique une matrice A dans une matrice A_copy passée en paramètre de taille nl*nc
+//
 void dup_matrix(uint8_t ** A, uint8_t **A_copy, uint32_t nl, uint32_t nc){
 	int i;
 	for(i=0;i<nl;i++) memcpy(&(A_copy[i][0]), &(A[i][0]), nl * sizeof(uint8_t));
 }
+
+//
+// dup_matrix_wborders
+// Duplique une matrice A dans une matrice A_copy passée en paramètre de taille nl+1*nc+1 entourée d'une ligne de 0
+//
 void dup_matrix_wborders(uint8_t ** A, uint8_t **A_copy, uint32_t nl, uint32_t nc){
 	int i,j;
 	// Initialisation de la matrice A_copy
@@ -56,5 +96,3 @@ void dup_matrix_wborders(uint8_t ** A, uint8_t **A_copy, uint32_t nl, uint32_t n
 		}
 	}
 }
-
-//	} memcpy(&(A_copy[i+1][1]), &(A[i][0]), (nl+2) * sizeof(uint8_t)); ??

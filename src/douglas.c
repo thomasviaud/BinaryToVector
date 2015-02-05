@@ -1,4 +1,12 @@
+///////////////////////////////////////////////////////////
+// douglas.c                                             //
+// Contient les fonctions relatives à l'algorithme de    //
+// Douglas-Peucker										 //
+///////////////////////////////////////////////////////////
+
+
 #include "../inc/douglas.h"
+
 //
 // douglas
 // Prend en argument la matrice des points, sa taille

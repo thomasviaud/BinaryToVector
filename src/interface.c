@@ -1,10 +1,14 @@
 ///////////////////////////////////////////////////////////
 // interface.c                                           //
 // Fonctions d'interface                                 //
-//                                                   	 //
 ///////////////////////////////////////////////////////////
+
 #include "../inc/interface.h"
 
+//
+// displayMenu
+// Affiche le menu est renvoie le numéro entré dans la console
+//
 int displayMenu(void)
 {
     int mode=0;

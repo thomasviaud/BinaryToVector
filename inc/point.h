@@ -10,7 +10,6 @@ typedef struct{
 	char is_done_d;	// 0 : !done 	1 : done
 }t_point;
 
-void alloc_point_matrix(t_point ***pA, uint32_t nl, uint32_t nc);
 void set_point_matrix(t_point ** img_point_matrix, t_pixel ** img_label_matrix, uint32_t nl, uint32_t nc);
 char set_point(t_pixel ** img_label_matrix, uint32_t l, uint32_t c);
 void print_point(t_point ** point, uint32_t l, uint32_t c);

@@ -26,6 +26,7 @@ void skelet(uint8_t **img_dist, t_pixel **img_label_matrix, t_plist *img_label_l
 		build_img_label(img_dist,img_label_matrix, nl, nc);
 
 		printf("================= CONTOUR %d =================\n",etape);
+		if(step==1) getchar();
 		disp_matrix_label(img_label_matrix,nl,nc);
 		build_img_list(img_label_matrix, img_label_list,nl,nc);
 		mult_border=skelet_condition(cpt_border,cpt_mult,list_copy,img_label_list);

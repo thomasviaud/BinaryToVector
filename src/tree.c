@@ -1,5 +1,16 @@
+///////////////////////////////////////////////////////////
+// tree.c                                                //
+// Contient les fonctions relatives à la gestion des     //
+// arbres                                                //
+///////////////////////////////////////////////////////////
+
 #include "../inc/tree.h"
 
+
+//
+// set_node
+// Créée un noeud à partir du point [l][c] de la matrice des points
+//
 pnoeud set_node(t_point** img_point, int l, int c){
 	pnoeud new;
 	new=(pnoeud)malloc(sizeof(noeud));
@@ -12,6 +23,10 @@ pnoeud set_node(t_point** img_point, int l, int c){
 	return new;
 }
 
+//
+// set_son
+// Attribue un fils numéro nson au noeud entré en paramètre
+//
 void set_son(pnoeud node, pnoeud son, int nson){
 	if(nson==1) node->son1=son;
 	if(nson==2) node->son2=son;
@@ -19,6 +34,10 @@ void set_son(pnoeud node, pnoeud son, int nson){
 	return;
 }
 
+//
+// next_node
+// Pointe le noeud suivant de l'arbre
+//
 pnoeud next_node(pnoeud node, int nson){
 	
 	if(nson==1) return node->son1;
@@ -27,6 +46,10 @@ pnoeud next_node(pnoeud node, int nson){
 	return node;
 }
 
+//
+// print_tree
+// Affichage de l'arbre
+//
 void print_tree(pnoeud node){
 	//printf(" %d ",node->point.type);
 	printf("%d",node->point.type);
@@ -40,10 +63,18 @@ void print_tree(pnoeud node){
 	return;
 }
 
+//
+// init_ltree
+// Initialise la liste d'arbres à NULL
+//
 plarbre init_ltree(){
 	return (plarbre)NULL;
 }
 
+//
+// add_tree
+// Ajoute un arbre à la liste larbre
+//
 plarbre add_tree(plarbre larbre, pnoeud noeud){
 	plarbre new;
 	new=(plarbre)malloc(sizeof(larbre));
@@ -52,10 +83,18 @@ plarbre add_tree(plarbre larbre, pnoeud noeud){
 	return new;
 }
 
+//
+// next_tree
+//
+//
 plarbre next_tree(plarbre larbre){
 	return larbre->next;
 }
 
+//
+// print_larbre
+//
+//
 void print_larbre(plarbre larbre){
 	plarbre save;
 	save=larbre;
