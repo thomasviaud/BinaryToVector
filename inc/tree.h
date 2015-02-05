@@ -21,7 +21,6 @@ typedef struct mm{
 	struct mm *son1;
 	struct mm *son2;
 	struct mm *son3;
-	struct mm *son4;
 	}noeud, *pnoeud;
 
 typedef struct mlarbre{

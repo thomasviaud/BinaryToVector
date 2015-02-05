@@ -62,13 +62,15 @@ int main(){
 		break;
 
 	case 3 :
-		strcpy(path,"./img/rond.bmp");
-		break;
-
-	case 4 :
 		strcpy(path,"./img/random.bmp");
 		break;
 
+	case 4 :
+		strcpy(path,"./img/face.bmp");
+		break;
+	case 5:
+		strcpy(path,"./img/coin.bmp");
+		break;
 	default :
 		return 0;
 	}
@@ -206,11 +208,12 @@ int main(){
 					plarbre img_tree_list;
 					img_tree_list=init_ltree();
 					img_tree_list=douglas(img_point_matrix,height+2,width+2,seuil);
+					printf("Arbre final : \n");
 					print_larbre(img_tree_list);
 
 
 					FILE* file = NULL;
-					print_latex(img_tree_list, file, height, width,nom_img);
+					print_latex(img_tree_list, file, height, width);
 				}
 				else
 				{

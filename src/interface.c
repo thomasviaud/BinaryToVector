@@ -18,9 +18,10 @@ int displayMenu(void)
     puts("======================= Menu ========================");
 	puts("|                                                   |");
 	puts("| 1- Choix de l'image                               |");
-	puts("| 2- Démonstration 1                                |");
-	puts("| 3- Démonstration 2                                |");
-	puts("| 4- Démonstration 3                                |");
+	puts("| 2- Exemple : Carré                                |");
+	puts("| 3- Exemple : Bifurcation                          |");
+	puts("| 4- Exemple : Face                                 |");
+	puts("| 5- Exemple : Coin                                 |");
 	puts("|                                                   |");
 	puts("=====================================================");
 	scanf("%d",&mode);

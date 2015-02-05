@@ -8,6 +8,6 @@
 #include "tree.h"
 
 void 	parcours_tree_print		(pnoeud tree, FILE* file);
-void 	print_latex				(plarbre list, FILE* file, uint32_t height, uint32_t width,char*name);
+void 	print_latex				(plarbre list, FILE* file, uint32_t height, uint32_t width);
 
 #endif

@@ -9,7 +9,6 @@ pnoeud set_node(t_point** img_point, int l, int c){
 	new->son1=NULL;
 	new->son2=NULL;
 	new->son3=NULL;
-	new->son4=NULL;
 	return new;
 }
 
@@ -17,7 +16,6 @@ void set_son(pnoeud node, pnoeud son, int nson){
 	if(nson==1) node->son1=son;
 	if(nson==2) node->son2=son;
 	if(nson==3) node->son3=son;
-	if(nson==4) node->son4=son;	
 	return;
 }
 
@@ -26,7 +24,6 @@ pnoeud next_node(pnoeud node, int nson){
 	if(nson==1) return node->son1;
 	if(nson==2) return node->son2;
 	if(nson==3) return node->son3;
-	if(nson==4) return node->son4;
 	return node;
 }
 
@@ -39,7 +36,6 @@ void print_tree(pnoeud node){
 	if(node->son2!=NULL) print_tree(next_node(node,2));
 	if(node->son3!=NULL) print_tree(next_node(node,3));
 	printf(" ");
-	if(node->son4!=NULL) print_tree(next_node(node,4));
 	printf(")");
 	return;
 }

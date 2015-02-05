@@ -7,16 +7,12 @@
 //
 plarbre douglas(t_point** img_point, uint32_t nl, uint32_t nc, int ep){
 	plarbre list,save;
-	printf("--- Création de l'arbre ---\n");
 	list=build_ltree(img_point,nl,nc);
-	print_larbre(list);
-	printf("--- Ajout des noeuds ---\n");
 	save=list;
 	while(save!=NULL){
 		edit_tree(save->tree,img_point,ep);
 		save=next_tree(save);
 	}
-
 	return list;
 }
 
@@ -51,7 +47,6 @@ plarbre build_ltree(t_point** img_point, uint32_t nl, uint32_t nc){
 // Ne retourne rien
 //
 void find_node(pnoeud node, t_point** point, uint32_t l, uint32_t c, int num, int ep){
-	printf("[%d][%d]\n",l,c);
 	int i,cpt=1;
 	float dist;
 	// Mise à jour du statut du pixel pour douglas
@@ -73,7 +68,6 @@ void find_node(pnoeud node, t_point** point, uint32_t l, uint32_t c, int num, in
 	}
 	cpt=0;
 	for(i=0;i<N;i++) if(voisins[i]==1) cpt++;	
-	printf("Compteur = %d\n",cpt);
 	if(cpt==0) return;
 	// Suppression des pixels en connexité 8 qui sont voisins de ceux en connexité 4
 	for(i=1;i<N;i+=2){
@@ -92,10 +86,7 @@ void find_node(pnoeud node, t_point** point, uint32_t l, uint32_t c, int num, in
 			find_node(node,point,l+coord[2*i],c+coord[2*i+1],num,ep);
 		// Type Bifurcation : on avance sur le fils considéré
 		}else{
-			i=0;
 			cpt=1;
-			for(i=0;i<N;i++) printf("%d ",voisins[i]);
-				printf("\n");
 			i=0;
 			while(voisins[i]==0){
 				i++;
@@ -123,18 +114,17 @@ void find_node(pnoeud node, t_point** point, uint32_t l, uint32_t c, int num, in
 		if(num==1){
 			dist=calc_dist(node,node->son1,l,c);
 			if(dist>ep) node=ins_node(node,node->son1,point,l,c,num);
+			printf("Distance=%f\n",dist);
 		}
 		else if(num==2){
 			dist=calc_dist(node,node->son2,l,c);
 			if(dist>ep) node=ins_node(node,node->son2,point,l,c,num);
+			printf("Distance=%f\n",dist);
 		}
 		else if(num==3){
 			dist=calc_dist(node,node->son3,l,c);
 			if(dist>ep) node=ins_node(node,node->son3,point,l,c,num);
-		}
-		else if(num==4){
-			dist=calc_dist(node,node->son4,l,c);
-			if(dist>ep) node=ins_node(node,node->son4,point,l,c,num);
+			printf("Distance=%f\n",dist);
 		}
 		i=0;
 		while(voisins[i]==0) i++;	
@@ -142,7 +132,6 @@ void find_node(pnoeud node, t_point** point, uint32_t l, uint32_t c, int num, in
 		find_node(node,point,l+coord[2*i],c+coord[2*i+1],num,ep);
 
 	}
-	printf("Retour\n");
 	return;
 }
 
@@ -154,10 +143,8 @@ void find_node(pnoeud node, t_point** point, uint32_t l, uint32_t c, int num, in
 // au seuil de l'arbre. 
 //
 void edit_tree(pnoeud tree, t_point** point, int ep){
-	printf("=======================================\n");
 	int x=tree->posx;
 	int y=tree->posy;
-	printf("Noeud [%d][%d]\n",x,y);
 	int num;
 
 	// Si le pointeur est sur un Noeud : on va au prochain noeud de l'arbre
@@ -165,30 +152,19 @@ void edit_tree(pnoeud tree, t_point** point, int ep){
 
 	// Parcours de l'arbre en profondeur
 	if(tree->son1!=NULL){
-		printf("Fils1 pas nul\n");
 		num=1;
 		find_node(tree,point,x,y,num,ep);
 		edit_tree(tree->son1,point,ep);		
 	}
 	if(tree->son2!=NULL){
-		printf("Fils2 pas nul\n");
 		num=2;
 		find_node(tree,point,x,y,num,ep);
 		edit_tree(tree->son2,point,ep);
 	}
 	if(tree->son3!=NULL){
-		printf("Fils3 pas nul\n");
 		num=3;
 		find_node(tree,point,x,y,num,ep);
-		tree=tree->son3;
 		edit_tree(tree->son3,point,ep);
-	}
-	if(tree->son4!=NULL){
-		printf("Fils4 pas nul\n");
-		num=4;
-		find_node(tree,point,x,y,num,ep);
-		tree=tree->son4;
-		edit_tree(tree->son4,point,ep);
 	}
 	return;
 }
@@ -207,7 +183,6 @@ pnoeud ins_node(pnoeud father, pnoeud son, t_point** point, uint32_t l, uint32_t
 	if(n_fils==1)	father->son1=new;
 	if(n_fils==2)	father->son2=new;
 	if(n_fils==3)	father->son3=new;
-	if(n_fils==4)	father->son4=new;
 	return new;
 }
 
@@ -220,7 +195,6 @@ pnoeud ins_node(pnoeud father, pnoeud son, t_point** point, uint32_t l, uint32_t
 // Retourne un noeud d'arbre
 //
 void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
-	printf("Je suis en [%d][%d]\n",l,c);
 	// Mise à jour du statut du point courant
 	point[l][c].is_done=1;
 	// Variable qui contient l'arbre retourné par la fonction
@@ -308,8 +282,9 @@ float calc_dist(pnoeud node1, pnoeud node2, uint32_t li, uint32_t co){
 	// On obtient en substituant b par y' - ax' 
 	// a = y-y'/x-x'
 	// b = y'- ax'
-	a=((float)node1->posy - node2->posy)/(node1->posx - node2->posx);
-	b=node2->posy - a*node2->posx;
+	if(node2->posx!=node1->posx) a=((float)node2->posy - node1->posy)/(node2->posx - node1->posx);
+	else a=0;
+	b=(float)node2->posy - a*node2->posx;
 
 	// Calcul de la distance du point à la droite d'équation ax + by + c = 0
 	orth=fabs(a*li - co + b)/sqrt(1+a*a);
