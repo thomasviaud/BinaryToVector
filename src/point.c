@@ -1,21 +1,18 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include "../inc/pixel.h"
+///////////////////////////////////////////////////////////
+// point.c                                               //
+// Contient les fonctions relatives à la manipulation 	 //
+// de points											 //
+///////////////////////////////////////////////////////////
+
 #include "../inc/point.h"
 #define N 8
 #define N_coin 3
 #define N_bord 5
-void alloc_point_matrix(t_point ***pA, uint32_t nl, uint32_t nc){
-	int i;
-    *pA = (t_point **)malloc(nl * sizeof(t_point *)) ;
-    for (i=0; i<nl; i++)
-    {
-        (*pA)[i] = (t_point *)malloc(nc * sizeof(t_point)) ;
-    }
 
-}
-
+//
+//	set_point_matrix
+//	Remplis une matrice de points de taille nc*nl
+//
 void set_point_matrix(t_point ** img_point_matrix, t_pixel ** img_label_matrix, uint32_t nl, uint32_t nc){
 	uint32_t i,j;
 	// Initialisation 
@@ -29,6 +26,10 @@ void set_point_matrix(t_point ** img_point_matrix, t_pixel ** img_label_matrix, 
 	disp_point_matrix(img_point_matrix,nl,nc);
 }
 
+//
+//	set_point
+//	Détermine le point en position [nl][nc] de la matrice des labels
+//
 char set_point(t_pixel ** img_label_matrix, uint32_t l, uint32_t c){
 
 	int i;
@@ -74,6 +75,11 @@ char set_point(t_pixel ** img_label_matrix, uint32_t l, uint32_t c){
 			// Point seul
 	return 0;
 }
+
+//
+//	print_point
+//	Imprime le type du point situé en [l][c]
+//
 void print_point(t_point ** point, uint32_t l, uint32_t c){
 	if(point[l][c].type==1) (void)printf("Bo  ");
 	else if(point[l][c].type==2) (void)printf("No  ");
@@ -82,6 +88,10 @@ void print_point(t_point ** point, uint32_t l, uint32_t c){
 	else if(point[l][c].type==4) (void)printf("--  ");
 }
 
+//
+//	disp_point_matrix
+//	Imprime la matrice de points de taille nl*nc
+//
 void disp_point_matrix(t_point ** point, uint32_t nl, uint32_t nc){
 	int i,j;
 	for(i=0;i<nl;i++){

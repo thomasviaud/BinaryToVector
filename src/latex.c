@@ -1,7 +1,14 @@
+///////////////////////////////////////////////////////////
+// latex.c                                               //
+// Contient les fonctions relatives à la création du pdf //
+///////////////////////////////////////////////////////////
+
 #include "../inc/latex.h"
 
-
-
+//
+// parcours_tree_print
+// Prend en arguments un arbre ainsi qu'un fichier dans lequel il faut écrire.
+//
 void parcours_tree_print(pnoeud tree, FILE* file) {
 
 	if(tree->son1 != NULL)
@@ -27,6 +34,10 @@ void parcours_tree_print(pnoeud tree, FILE* file) {
 	return;
 }
 
+//
+// print_latex
+// Prend en arguments une liste d'arbres, un fichier dans lequel il faut écrire ainsi que la hauteur/largeur de l'image.
+//
 void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
  
     file = fopen("./bin/result.tex", "w");
@@ -39,8 +50,11 @@ void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
         fputs("\\begin{document}\n", file);
         fputs("\\begin{figure}\n", file);
         fputs("\\centering\n", file);
+        // Calcul de l'échelle en fonction de la taille de l'image
         fprintf(file,"\\begin{tikzpicture}[scale=%f]\n", fmin((float)10/height,(float)10/width));
+        //Rotation pour commencer en haut à gauche
         fputs("\\begin{scope}[rotate=-90]\n",file);
+        // Grille de la taille de notre image
         fprintf(file,"\\draw[color=gray, style=dotted] (0,0) grid[xstep=1, ystep=1] (%d,%d);\n", height, width);
 
         while (list != NULL)
@@ -57,6 +71,7 @@ void print_latex(plarbre list, FILE* file, uint32_t height, uint32_t width) {
         fclose(file);
     }
     system("pdflatex ./bin/result.tex");
-    system("evince --fullscreen result.pdf &");
+    system("evince ./result.pdf &> /dev/null");
+    system("clear");
     return;
 }

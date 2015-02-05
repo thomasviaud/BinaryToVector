@@ -31,7 +31,7 @@ obj/main.o: src/main.c inc/bmp_reader.h inc/pass.h inc/point.h
 obj/skel.o: src/skel.c inc/skel.h inc/list.h inc/pixel.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
-obj/matrix.o: src/matrix.c inc/pixel.h inc/matrix.h 
+obj/matrix.o: src/matrix.c inc/pixel.h inc/matrix.h inc/point.h
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 obj/douglas.o: src/douglas.c inc/douglas.h inc/pixel.h inc/point.h inc/tree.h

@@ -1,4 +1,12 @@
+///////////////////////////////////////////////////////////
+// douglas.c                                             //
+// Contient les fonctions relatives à l'algorithme de    //
+// Douglas-Peucker										 //
+///////////////////////////////////////////////////////////
+
+
 #include "../inc/douglas.h"
+
 //
 // douglas
 // Prend en argument la matrice des points, sa taille
@@ -31,7 +39,6 @@ plarbre douglas(t_point** img_point, uint32_t nl, uint32_t nc){
 // Retourne un noeud d'arbre
 //
 void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
-	printf("Je suis en [%d][%d]\n",l,c);
 	// Mise à jour du statut du point courant
 	point[l][c].is_done=1;
 	// Variable qui contient l'arbre retourné par la fonction
@@ -70,14 +77,12 @@ void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
 		tree->point=point[l][c];
 		tree->posx=l;
 		tree->posy=c;
-		printf("Je suis une Borne. STOP\n");
 		return;
 	} 
 
 
 	// Ajout du pixel courant s'il est du bon type (1 ou 3) dans l'arbre	
-	if((point[l][c].type)%2==1){
-	printf("Le pixel est de type Borne/Bifurcation\n");		
+	if((point[l][c].type)%2==1){	
 		if(point[l][c].type==3){
 			tree->posx=l;
 			tree->posy=c;
@@ -87,7 +92,6 @@ void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
 		// Appel récursif pour chaque voisin non lu
 		for(i=0;i<2*N;i+=2){
 			if(voisins[i/2]==1){
-				printf("Prochain voisin : [%d][%d]\n",coord[i]+l,coord[i+1]+c);
 				n_node=set_node(point,l,c);
 				parcours_img(n_node,point,l+coord[i],c+coord[i+1]);
 				// Lien entre n_node et tree
@@ -97,7 +101,6 @@ void parcours_img(pnoeud tree, t_point** point, uint32_t l, uint32_t c){
 		}
 	// Le pixel est de type Point ou Noeud : on avance quand même
 	}else{
-		printf("Le pixel est de type Point\n");
 		// Appel récursif pour chaque voisin non lu
 		for(i=0;i<2*N;i+=2){
 			if(voisins[i/2]==1){

@@ -205,6 +205,7 @@ int main(){
 					puts("|                   DOUGLAS-PEUCKER                  |");
 					puts("=====================================================");			
 					// Déclaration et allocation en mémoire de img_point_matrix
+					if(step==1) getchar();
 					t_point ** img_point_matrix;
 					alloc_point_matrix(&img_point_matrix,height+2,width+2);
 					// Douglas-Peucker
@@ -214,8 +215,9 @@ int main(){
 					plarbre img_tree_list;
 					img_tree_list=init_ltree();
 					img_tree_list=douglas(img_point_matrix,height+2,width+2);
+					if(step==1) getchar();
 					print_larbre(img_tree_list);
-
+					if(step==1) getchar();
 					FILE* file = NULL;
 					print_latex(img_tree_list, file, height, width);
 				}
